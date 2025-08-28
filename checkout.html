@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopLite | Checkout</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    h1, h2, h3, .nav-link { font-family: 'Poppins', sans-serif; }
+    .btn, .price { font-family: 'Montserrat', sans-serif; }
+  </style>
+</head>
+<body class="bg-[#fcfcfc] text-[#1a1b41]">
+
+  <!-- Navbar -->
+  <header class="bg-[#1a1b41] text-white p-4 flex justify-between items-center">
+    <a href="index.html" class="text-2xl font-bold"><span class="text-[#baff29]">Shop</span>Lite</a>
+    <a href="cart.html" class="text-white hover:text-[#baff29]">Back to Cart</a>
+  </header>
+
+  <main class="container mx-auto py-12 px-6">
+    <h1 class="text-3xl font-bold mb-8">Checkout</h1>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      
+      <!-- Forms Section -->
+      <div class="space-y-8">
+        <!-- Billing Info -->
+        <section>
+          <h2 class="text-2xl font-bold mb-4">Billing Information</h2>
+          <form id="checkout-form" class="space-y-4">
+            <input type="text" id="billing-name" placeholder="Full Name" required class="w-full p-3 border rounded">
+            <input type="email" id="billing-email" placeholder="Email" required class="w-full p-3 border rounded">
+            <input type="tel" id="billing-phone" placeholder="Phone Number" required class="w-full p-3 border rounded">
+            <input type="text" id="billing-address" placeholder="Address" required class="w-full p-3 border rounded">
+            <input type="text" id="billing-city" placeholder="City" required class="w-full p-3 border rounded">
+            <input type="text" id="billing-zip" placeholder="ZIP / Postal Code" required class="w-full p-3 border rounded">
+            <input type="text" id="billing-country" placeholder="Country" required class="w-full p-3 border rounded">
+          </form>
+        </section>
+
+        <!-- Shipping Info -->
+        <section>
+          <h2 class="text-2xl font-bold mb-4">Shipping Information</h2>
+          <label class="flex items-center gap-2 mb-2">
+            <input type="checkbox" id="same-as-billing" checked>
+            Same as billing information
+          </label>
+          <div id="shipping-form" class="space-y-4 hidden">
+            <input type="text" id="shipping-name" placeholder="Full Name" class="w-full p-3 border rounded">
+            <input type="text" id="shipping-address" placeholder="Address" class="w-full p-3 border rounded">
+            <input type="text" id="shipping-city" placeholder="City" class="w-full p-3 border rounded">
+            <input type="text" id="shipping-zip" placeholder="ZIP / Postal Code" class="w-full p-3 border rounded">
+            <input type="text" id="shipping-country" placeholder="Country" class="w-full p-3 border rounded">
+          </div>
+        </section>
+
+        <!-- Payment Info -->
+        <section>
+          <h2 class="text-2xl font-bold mb-4">Payment Information</h2>
+          <input type="text" id="card-name" placeholder="Cardholder Name" required class="w-full p-3 border rounded">
+          <input type="text" id="card-number" placeholder="Card Number" required class="w-full p-3 border rounded">
+          <div class="flex gap-4">
+            <input type="text" id="expiry" placeholder="MM/YY" required class="flex-1 p-3 border rounded">
+            <input type="text" id="cvv" placeholder="CVV" required class="flex-1 p-3 border rounded">
+          </div>
+        </section>
+      </div>
+
+      <!-- Order Summary Section -->
+      <div>
+        <h2 class="text-2xl font-bold mb-4">Order Summary</h2>
+        <div id="order-summary" class="space-y-4 bg-white p-4 rounded-lg shadow-md">
+          <!-- Products injected here -->
+        </div>
+        <div class="mt-4 p-4 bg-white rounded-lg shadow-md">
+          <p class="mb-2">Subtotal: $<span id="subtotal">0.00</span></p>
+          <p class="mb-4 font-bold">Total: $<span id="total">0.00</span></p>
+          <button id="place-order" class="btn bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition w-full">
+            Place Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const sameAsBilling = document.getElementById("same-as-billing");
+    const shippingForm = document.getElementById("shipping-form");
+    const orderSummary = document.getElementById("order-summary");
+    const subtotalEl = document.getElementById("subtotal");
+    const totalEl = document.getElementById("total");
+    const placeOrderBtn = document.getElementById("place-order");
+
+    // Toggle shipping form
+    sameAsBilling.addEventListener("change", () => {
+      shippingForm.classList.toggle("hidden", sameAsBilling.checked);
+    });
+
+    // Load cart items
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      orderSummary.innerHTML = '';
+      let subtotal = 0;
+
+      if(cart.length === 0){
+        orderSummary.innerHTML = '<p class="text-gray-500">Your cart is empty.</p>';
+      } else {
+        cart.forEach(item => {
+          subtotal += item.price * item.qty;
+          const div = document.createElement("div");
+          div.className = "flex justify-between items-center";
+          div.innerHTML = `
+            <p>${item.title} x ${item.qty}</p>
+            <p>$${(item.price * item.qty).toFixed(2)}</p>
+          `;
+          orderSummary.appendChild(div);
+        });
+      }
+
+      subtotalEl.textContent = subtotal.toFixed(2);
+      totalEl.textContent = subtotal.toFixed(2);
+    }
+
+    // Place order
+    placeOrderBtn.addEventListener("click", () => {
+      const billing = {
+        name: document.getElementById("billing-name").value,
+        email: document.getElementById("billing-email").value,
+        phone: document.getElementById("billing-phone").value,
+        address: document.getElementById("billing-address").value,
+        city: document.getElementById("billing-city").value,
+        zip: document.getElementById("billing-zip").value,
+        country: document.getElementById("billing-country").value
+      };
+
+      let shipping;
+      if(sameAsBilling.checked){
+        shipping = { ...billing };
+      } else {
+        shipping = {
+          name: document.getElementById("shipping-name").value,
+          address: document.getElementById("shipping-address").value,
+          city: document.getElementById("shipping-city").value,
+          zip: document.getElementById("shipping-zip").value,
+          country: document.getElementById("shipping-country").value
+        };
+      }
+
+      const payment = {
+        cardName: document.getElementById("card-name").value,
+        cardNumber: document.getElementById("card-number").value,
+        expiry: document.getElementById("expiry").value,
+        cvv: document.getElementById("cvv").value
+      };
+
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      if(cart.length === 0){
+        alert("Your cart is empty!");
+        return;
+      }
+
+      // Here you would send data to backend/payment gateway
+      console.log("Order placed:", { billing, shipping, payment, cart });
+
+      // Clear cart
+      localStorage.removeItem("cart");
+      alert("Order placed successfully!");
+      window.location.href = "index.html";
+    });
+
+    document.addEventListener("DOMContentLoaded", loadCart);
+  </script>
+
+</body>
+</html>

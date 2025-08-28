@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopLite | Cart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    h1, h2, h3, .nav-link { font-family: 'Poppins', sans-serif; }
+    .btn, .price { font-family: 'Montserrat', sans-serif; }
+  </style>
+</head>
+<body class="bg-[#fcfcfc] text-[#1a1b41]">
+
+  <!-- Navbar -->
+  <header class="bg-[#1a1b41] text-white p-4 flex justify-between items-center">
+    <a href="index.html" class="text-2xl font-bold"><span class="text-[#baff29]">Shop</span>Lite</a>
+    <a href="index.html" class="text-white hover:text-[#baff29]">Continue Shopping</a>
+  </header>
+
+  <!-- Cart Section -->
+  <main class="container mx-auto py-12 px-6">
+    <h1 class="text-3xl font-bold mb-6">Your Cart</h1>
+
+    <div id="cart-container" class="space-y-4">
+      <!-- Cart items injected here -->
+    </div>
+
+    <div id="cart-summary" class="mt-8 p-4 bg-white rounded-lg shadow-md hidden">
+      <h2 class="text-2xl font-bold mb-4">Order Summary</h2>
+      <p class="mb-2">Subtotal: $<span id="subtotal">0.00</span></p>
+      <p class="mb-4 font-bold">Total: $<span id="total">0.00</span></p>
+      <a href="checkout.html" class="btn bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition">Proceed to Checkout</a>
+    </div>
+
+    <p id="empty-cart" class="text-center text-gray-500 mt-12">Your cart is empty.</p>
+  </main>
+
+  <script>
+    const cartContainer = document.getElementById("cart-container");
+    const subtotalEl = document.getElementById("subtotal");
+    const totalEl = document.getElementById("total");
+    const cartSummary = document.getElementById("cart-summary");
+    const emptyCart = document.getElementById("empty-cart");
+
+    function loadCart() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cartContainer.innerHTML = '';
+
+      if (cart.length === 0) {
+        cartSummary.classList.add("hidden");
+        emptyCart.classList.remove("hidden");
+        return;
+      }
+
+      emptyCart.classList.add("hidden");
+      cartSummary.classList.remove("hidden");
+
+      cart.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "flex items-center bg-white rounded-lg shadow-md p-4 gap-4";
+
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" class="w-24 h-24 object-contain rounded">
+          <div class="flex-1">
+            <h3 class="font-semibold">${item.title}</h3>
+            <p class="text-gray-600">$${item.price}</p>
+            <div class="mt-2 flex items-center gap-2">
+              <button class="px-2 py-1 bg-gray-200 rounded qty-btn" data-id="${item.id}" data-action="minus">-</button>
+              <span id="qty-${item.id}" class="font-semibold">${item.qty}</span>
+              <button class="px-2 py-1 bg-gray-200 rounded qty-btn" data-id="${item.id}" data-action="plus">+</button>
+              <button class="ml-4 text-red-500 font-bold remove-btn" data-id="${item.id}">Remove</button>
+            </div>
+          </div>
+          <p class="font-bold">$<span id="item-total-${item.id}">${(item.price * item.qty).toFixed(2)}</span></p>
+        `;
+
+        cartContainer.appendChild(div);
+      });
+
+      updateTotals();
+      attachEventListeners();
+    }
+
+    function attachEventListeners() {
+      // Update quantity
+      document.querySelectorAll(".qty-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const id = parseInt(btn.dataset.id);
+          const action = btn.dataset.action;
+          const idx = cart.findIndex(i => i.id === id);
+
+          if (idx >= 0) {
+            if (action === "plus") cart[idx].qty++;
+            if (action === "minus" && cart[idx].qty > 1) cart[idx].qty--;
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+          }
+        });
+      });
+
+      // Remove item
+      document.querySelectorAll(".remove-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const id = parseInt(btn.dataset.id);
+          cart = cart.filter(i => i.id !== id);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          loadCart();
+        });
+      });
+    }
+
+    function updateTotals() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      subtotalEl.textContent = subtotal.toFixed(2);
+      totalEl.textContent = subtotal.toFixed(2);
+
+      // Update individual item totals
+      cart.forEach(item => {
+        const el = document.getElementById(`item-total-${item.id}`);
+        if (el) el.textContent = (item.price * item.qty).toFixed(2);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadCart);
+  </script>
+
+</body>
+</html>
