@@ -7,8 +7,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: 'Roboto', sans-serif; }
-    h1, h2, h3, .nav-link { font-family: 'Poppins', sans-serif; }
+    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
     .btn, .price { font-family: 'Montserrat', sans-serif; }
+    .error { color: red; font-size: 0.9rem; margin-top: 2px; }
   </style>
 </head>
 <body class="bg-[#fcfcfc] text-[#1a1b41]">
@@ -24,20 +25,20 @@
 
     <div class="grid md:grid-cols-2 gap-8">
       
-      <!-- Forms Section -->
-      <div class="space-y-8">
+      <!-- Checkout Form -->
+      <form id="checkout-form" class="space-y-8">
+        
         <!-- Billing Info -->
         <section>
           <h2 class="text-2xl font-bold mb-4">Billing Information</h2>
-          <form id="checkout-form" class="space-y-4">
-            <input type="text" id="billing-name" placeholder="Full Name" required class="w-full p-3 border rounded">
-            <input type="email" id="billing-email" placeholder="Email" required class="w-full p-3 border rounded">
-            <input type="tel" id="billing-phone" placeholder="Phone Number" required class="w-full p-3 border rounded">
-            <input type="text" id="billing-address" placeholder="Address" required class="w-full p-3 border rounded">
-            <input type="text" id="billing-city" placeholder="City" required class="w-full p-3 border rounded">
-            <input type="text" id="billing-zip" placeholder="ZIP / Postal Code" required class="w-full p-3 border rounded">
-            <input type="text" id="billing-country" placeholder="Country" required class="w-full p-3 border rounded">
-          </form>
+          <input type="text" id="billing-name" placeholder="Full Name" required class="w-full p-3 border rounded">
+          <input type="email" id="billing-email" placeholder="Email" required class="w-full p-3 border rounded">
+          <input type="tel" id="billing-phone" placeholder="Phone Number" required class="w-full p-3 border rounded">
+          <input type="text" id="billing-address" placeholder="Address" required class="w-full p-3 border rounded">
+          <input type="text" id="billing-city" placeholder="City" required class="w-full p-3 border rounded">
+          <input type="text" id="billing-zip" placeholder="ZIP / Postal Code" required class="w-full p-3 border rounded">
+          <div id="zip-error" class="error hidden">Postal code must be 4–6 digits.</div>
+          <input type="text" id="billing-country" placeholder="Country" required class="w-full p-3 border rounded">
         </section>
 
         <!-- Shipping Info -->
@@ -60,26 +61,29 @@
         <section>
           <h2 class="text-2xl font-bold mb-4">Payment Information</h2>
           <input type="text" id="card-name" placeholder="Cardholder Name" required class="w-full p-3 border rounded">
-          <input type="text" id="card-number" placeholder="Card Number" required class="w-full p-3 border rounded">
+          <input type="text" id="card-number" placeholder="Card Number (16 digits)" maxlength="16" required class="w-full p-3 border rounded">
+          <div id="card-error" class="error hidden">Card number must be 16 digits.</div>
           <div class="flex gap-4">
             <input type="text" id="expiry" placeholder="MM/YY" required class="flex-1 p-3 border rounded">
-            <input type="text" id="cvv" placeholder="CVV" required class="flex-1 p-3 border rounded">
+            <input type="text" id="cvv" placeholder="CVV (3 digits)" maxlength="3" required class="flex-1 p-3 border rounded">
           </div>
+          <div id="expiry-error" class="error hidden">Expiry date must be valid and not expired.</div>
+          <div id="cvv-error" class="error hidden">CVV must be 3 digits.</div>
         </section>
-      </div>
 
-      <!-- Order Summary Section -->
+        <!-- Submit Button -->
+        <button type="submit" class="btn bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition w-full">
+          Place Order
+        </button>
+      </form>
+
+      <!-- Order Summary -->
       <div>
         <h2 class="text-2xl font-bold mb-4">Order Summary</h2>
-        <div id="order-summary" class="space-y-4 bg-white p-4 rounded-lg shadow-md">
-          <!-- Products injected here -->
-        </div>
+        <div id="order-summary" class="space-y-4 bg-white p-4 rounded-lg shadow-md"></div>
         <div class="mt-4 p-4 bg-white rounded-lg shadow-md">
           <p class="mb-2">Subtotal: $<span id="subtotal">0.00</span></p>
           <p class="mb-4 font-bold">Total: $<span id="total">0.00</span></p>
-          <button id="place-order" class="btn bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition w-full">
-            Place Order
-          </button>
         </div>
       </div>
     </div>
@@ -91,14 +95,20 @@
     const orderSummary = document.getElementById("order-summary");
     const subtotalEl = document.getElementById("subtotal");
     const totalEl = document.getElementById("total");
-    const placeOrderBtn = document.getElementById("place-order");
+    const checkoutForm = document.getElementById("checkout-form");
 
     // Toggle shipping form
     sameAsBilling.addEventListener("change", () => {
-      shippingForm.classList.toggle("hidden", sameAsBilling.checked);
+      if (sameAsBilling.checked) {
+        shippingForm.classList.add("hidden");
+        [...shippingForm.querySelectorAll("input")].forEach(i => i.removeAttribute("required"));
+      } else {
+        shippingForm.classList.remove("hidden");
+        [...shippingForm.querySelectorAll("input")].forEach(i => i.setAttribute("required", "true"));
+      }
     });
 
-    // Load cart items
+    // Load cart
     function loadCart() {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       orderSummary.innerHTML = '';
@@ -111,10 +121,7 @@
           subtotal += item.price * item.qty;
           const div = document.createElement("div");
           div.className = "flex justify-between items-center";
-          div.innerHTML = `
-            <p>${item.title} x ${item.qty}</p>
-            <p>$${(item.price * item.qty).toFixed(2)}</p>
-          `;
+          div.innerHTML = `<p>${item.title} x ${item.qty}</p><p>$${(item.price * item.qty).toFixed(2)}</p>`;
           orderSummary.appendChild(div);
         });
       }
@@ -123,56 +130,98 @@
       totalEl.textContent = subtotal.toFixed(2);
     }
 
-    // Place order
-    placeOrderBtn.addEventListener("click", () => {
-      const billing = {
-        name: document.getElementById("billing-name").value,
-        email: document.getElementById("billing-email").value,
-        phone: document.getElementById("billing-phone").value,
-        address: document.getElementById("billing-address").value,
-        city: document.getElementById("billing-city").value,
-        zip: document.getElementById("billing-zip").value,
-        country: document.getElementById("billing-country").value
-      };
+    // Helpers for validation
+    function validateCardNumber(num) {
+      return /^\d{16}$/.test(num);
+    }
 
-      let shipping;
-      if(sameAsBilling.checked){
-        shipping = { ...billing };
+    function validateCVV(cvv) {
+      return /^\d{3}$/.test(cvv);
+    }
+
+    function validateExpiry(expiry) {
+      if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) return false;
+      const [month, year] = expiry.split("/").map(x => parseInt(x));
+      const now = new Date();
+      const expDate = new Date(2000 + year, month); // add 2000 for YY
+      return expDate > now;
+    }
+
+    function validateZip(zip) {
+      return /^\d{4,6}$/.test(zip);
+    }
+
+    // Checkout
+    checkoutForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Grab values
+      const cardNumber = document.getElementById("card-number").value.trim();
+      const cvv = document.getElementById("cvv").value.trim();
+      const expiry = document.getElementById("expiry").value.trim();
+      const zip = document.getElementById("billing-zip").value.trim();
+
+      let valid = true;
+
+      // Validate card
+      if (!validateCardNumber(cardNumber)) {
+        document.getElementById("card-error").classList.remove("hidden");
+        valid = false;
       } else {
-        shipping = {
-          name: document.getElementById("shipping-name").value,
-          address: document.getElementById("shipping-address").value,
-          city: document.getElementById("shipping-city").value,
-          zip: document.getElementById("shipping-zip").value,
-          country: document.getElementById("shipping-country").value
-        };
+        document.getElementById("card-error").classList.add("hidden");
       }
 
-      const payment = {
-        cardName: document.getElementById("card-name").value,
-        cardNumber: document.getElementById("card-number").value,
-        expiry: document.getElementById("expiry").value,
-        cvv: document.getElementById("cvv").value
-      };
+      // Validate CVV
+      if (!validateCVV(cvv)) {
+        document.getElementById("cvv-error").classList.remove("hidden");
+        valid = false;
+      } else {
+        document.getElementById("cvv-error").classList.add("hidden");
+      }
+
+      // Validate expiry
+      if (!validateExpiry(expiry)) {
+        document.getElementById("expiry-error").classList.remove("hidden");
+        valid = false;
+      } else {
+        document.getElementById("expiry-error").classList.add("hidden");
+      }
+
+      // Validate zip
+      if (!validateZip(zip)) {
+        document.getElementById("zip-error").classList.remove("hidden");
+        valid = false;
+      } else {
+        document.getElementById("zip-error").classList.add("hidden");
+      }
+
+      if (!valid) return;
 
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
       if(cart.length === 0){
         alert("Your cart is empty!");
         return;
       }
 
-      // Here you would send data to backend/payment gateway
-      console.log("Order placed:", { billing, shipping, payment, cart });
+      // Generate order
+      const order = {
+        orderId: "SHOP" + Date.now(),
+        date: new Date().toLocaleString(),
+        items: cart,
+        subtotal: subtotalEl.textContent,
+        total: totalEl.textContent,
+        status: "Processing"
+      };
 
-      // Clear cart
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders.push(order);
+      localStorage.setItem("orders", JSON.stringify(orders));
       localStorage.removeItem("cart");
-      alert("Order placed successfully!");
-      window.location.href = "index.html";
+
+      window.location.href = `receipt.html?orderId=${order.orderId}`;
     });
 
     document.addEventListener("DOMContentLoaded", loadCart);
   </script>
-
 </body>
 </html>

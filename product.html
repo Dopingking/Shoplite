@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopLite | Product Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#fcfcfc] text-[#1a1b41]">
+
+  <!-- Navbar -->
+  <header class="bg-[#1a1b41] text-white p-4 flex justify-between items-center">
+    <a href="index.html" class="text-2xl font-bold"><span class="text-[#baff29]">Shop</span>Lite</a>
+    <a href="cart.html" class="relative">
+      🛒
+      <span id="cart-count" class="absolute -top-2 -right-3 bg-[#3bc14a] text-white text-xs rounded-full px-2">0</span>
+    </a>
+  </header>
+  <div class="p-4 md:hidden">
+  <a href="index.html" 
+     class="inline-block bg-gray-200 text-[#1a1b41] px-4 py-2 rounded-lg font-medium hover:bg-[#3bc14a] hover:text-white transition">
+    ← Back to Shop
+  </a>
+</div>
+
+  <!-- Product Section -->
+  <section id="product-details" class="container mx-auto px-6 py-12">
+    <div id="loading" class="text-center py-8">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#3bc14a]"></div>
+      <p class="mt-2 text-gray-600">Loading product...</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#1a1b41] text-white py-6 text-center">
+    <p>&copy; 2025 ShopLite. All rights reserved.</p>
+  </footer>
+
+  <button id="scrollTopBtn" 
+        class="hidden fixed bottom-6 right-6 bg-[#3bc14a] text-white p-3 rounded-full shadow-lg hover:bg-green-700 transition">
+  ↑
+</button>
+  <script>
+    const API_URL = "https://api.escuelajs.co/api/v1/products";
+    const productDetails = document.getElementById("product-details");
+    const cartCount = document.getElementById("cart-count");
+    const loading = document.getElementById("loading");
+
+    // Get product id from URL
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+
+    // Utility: pick valid image
+    function getValidImage(images) {
+      if (Array.isArray(images)) {
+        for (let img of images) {
+          if (img && typeof img === "string" && img.startsWith("http") && !img.includes("localhost")) {
+            return img;
+          }
+        }
+      }
+      return "https://placehold.co/400x300?text=No+Image";
+    }
+
+    // Fetch product details
+    async function fetchProduct() {
+      try {
+        const res = await fetch(`${API_URL}/${productId}`);
+        const product = await res.json();
+
+        loading.classList.add("hidden");
+
+        // Render details
+        productDetails.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Image Gallery -->
+            <div>
+              <img src="${getValidImage(product.images)}" 
+                   alt="${product.title}" 
+                   class="w-full h-96 object-contain rounded-lg border">
+              <div class="flex gap-2 mt-4">
+                ${product.images.map(img => `
+                  <img src="${img}" class="w-20 h-20 object-contain border rounded cursor-pointer hover:border-[#3bc14a]">
+                `).join("")}
+              </div>
+            </div>
+
+            <!-- Info -->
+            <div>
+              <h1 class="text-3xl font-bold mb-4">${product.title}</h1>
+              <p class="text-gray-600 mb-4">${product.description}</p>
+              <p class="text-xl font-bold text-[#1a1b41] mb-6">$${product.price}</p>
+              <p class="text-sm text-gray-500 mb-6">Category: ${product.category?.name || "N/A"}</p>
+
+              <button onclick="addToCart(${product.id}, '${product.title.replace(/'/g, "\\'")}', ${product.price}, '${getValidImage(product.images)}')"
+                class="bg-[#3bc14a] text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        console.error("Error loading product:", err);
+        productDetails.innerHTML = `<p class="text-red-500 text-center">Failed to load product details.</p>`;
+      }
+    }
+
+    // Add to cart
+    function addToCart(productId, title, price, image) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const idx = cart.findIndex((i) => i.id === productId);
+
+      if (idx >= 0) {
+        cart[idx].qty++;
+      } else {
+        cart.push({ id: productId, qty: 1, title, price, image });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert("✅ Added to cart!");
+    }
+
+    // Update cart count
+    function updateCartCount() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+      cartCount.textContent = totalItems;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchProduct();
+      updateCartCount();
+    });
+
+    
+  </script>
+</body>
+</html>

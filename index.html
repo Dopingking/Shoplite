@@ -59,7 +59,7 @@
       <!-- Nav Links (Desktop) -->
       <nav id="nav-links" class="hidden md:flex gap-6">
         <a href="index.html" class="nav-link hover:text-[#baff29]">Home</a>
-        <a href="#products" class="nav-link hover:text-[#baff29]">Shop</a>
+        <a href="orders.html" class="nav-link hover:text-[#baff29]">Orders</a>
         <a href="#" class="nav-link hover:text-[#baff29]">About</a>
         <a href="#" class="nav-link hover:text-[#baff29]">Contact</a>
       </nav>
@@ -83,18 +83,51 @@
     <!-- Mobile Nav -->
     <div id="mobile-menu" class="hidden bg-[#1a1b41] p-4 md:hidden">
       <a href="index.html" class="block py-2 hover:text-[#baff29]">Home</a>
-      <a href="#products" class="block py-2 hover:text-[#baff29]">Shop</a>
+      <a href="orders.html" class="block py-2 hover:text-[#baff29]">Orders</a>
       <a href="#" class="block py-2 hover:text-[#baff29]">About</a>
       <a href="#" class="block py-2 hover:text-[#baff29]">Contact</a>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-[#1a1b41] to-[#3a3b7a] text-white text-center py-16">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">Fresh Deals, Just for You</h1>
-    <p class="text-gray-300 mb-6">Shop the latest products at unbeatable prices</p>
-    <a href="#products" class="btn inline-block bg-[#3bc14a] text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition">Shop Now</a>
-  </section>
+<section class="relative w-full h-[70vh] overflow-hidden">
+  <!-- Slides -->
+  <div id="hero-bg" class="absolute inset-0 flex transition-transform duration-700 ease-in-out">
+    <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=1201&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+         class="w-full h-full object-cover flex-shrink-0" alt="Electronics">
+    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+         class="w-full h-full object-cover flex-shrink-0" alt="Electronics">
+    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1600&q=80"
+         class="w-full h-full object-cover flex-shrink-0" alt="Shopping">
+  </div>
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/50"></div>
+
+  <!-- Text Content -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
+    <div class="bg-[#1a1b41]/70 p-6 md:p-10 rounded-lg shadow-lg">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">
+        Fresh <span class="text-[#baff29]">Deals</span>, Just for You
+      </h1>
+      <p class="text-lg mb-6 text-gray-200">
+        Discover the latest products at unbeatable prices. Fast shipping, secure checkout, and daily offers.
+      </p>
+      <a href="#products" 
+         class="bg-[#3bc14a] text-white px-8 py-3 rounded-lg shadow hover:bg-green-700 transition">
+        Shop Now
+      </a>
+    </div>
+  </div>
+
+
+
+  <!-- Promo Marquee -->
+  <marquee class="absolute bottom-0 left-0 w-full bg-[#baff29] text-[#1a1b41] font-bold py-2">
+    🚀 Big Sale Today! · 🛒 Free Shipping on Orders Over $50 · 🔥 Up to 60% Off Selected Items · 🎉 ShopLite Exclusive Deals
+  </marquee>
+</section>
+
 
   <!-- Featured Products -->
   <section id="products" class="py-12 px-6 container mx-auto">
@@ -154,6 +187,29 @@
     const loadingCategories = document.getElementById("loading-categories");
     const toast = document.getElementById("toast");
 
+    // Hero Section
+const heroBg = document.getElementById("hero-bg");
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
+  let index = 0;
+  const slidesCount = heroBg.children.length;
+
+  function showSlide(i) {
+    index = (i + slidesCount) % slidesCount; 
+    heroBg.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  // Auto Slide
+  setInterval(() => {
+    showSlide(index + 1);
+  }, 4000);
+
+  // Manual
+  prev.addEventListener("click", () => showSlide(index - 1));
+  next.addEventListener("click", () => showSlide(index + 1));
+
+// Hero section end
+
     // Utility: pick the first valid image URL
     function getValidImage(images) {
       if (Array.isArray(images)) {
@@ -196,29 +252,37 @@
     }
 
     // Render products
-    function renderProducts(products) {
-      productList.innerHTML = products
-        .map((p) => {
-          const imgSrc = getValidImage(p.images);
+    // Render products
+function renderProducts(products) {
+  productList.innerHTML = products
+    .map((p) => {
+      const imgSrc = getValidImage(p.images);
 
-          return `
-            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
-              <img src="${imgSrc}" alt="${p.title}" 
-                   class="h-48 w-full object-contain p-4">
-              <div class="p-4">
-                <h3 class="font-semibold text-gray-800 line-clamp-1">${p.title}</h3>
-                <p class="text-gray-600 text-sm mt-1 line-clamp-2">${p.description || 'No description available'}</p>
-                <p class="price text-[#1a1b41] font-bold mt-2">$${p.price}</p>
-                <button onclick="addToCart(${p.id}, '${p.title.replace(/'/g, "\\'")}', ${p.price}, '${imgSrc}')"
-                  class="mt-3 w-full bg-[#3bc14a] text-white py-2 rounded hover:bg-green-700 transition">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          `;
-        })
-        .join("");
-    }
+      return `
+        <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+          <img src="${imgSrc}" alt="${p.title}" 
+               class="h-48 w-full object-contain p-4">
+          <div class="p-4">
+            <h3 class="font-semibold text-gray-800 line-clamp-1">${p.title}</h3>
+            <p class="text-gray-600 text-sm mt-1 line-clamp-2">${p.description || 'No description available'}</p>
+            <p class="price text-[#1a1b41] font-bold mt-2">$${p.price}</p>
+            
+            <button onclick="addToCart(${p.id}, '${p.title.replace(/'/g, "\\'")}', ${p.price}, '${imgSrc}')"
+              class="mt-3 w-full bg-[#3bc14a] text-white py-2 rounded hover:bg-green-700 transition">
+              Add to Cart
+            </button>
+
+            <!-- View Details Link -->
+            <a href="product.html?id=${p.id}" 
+               class="mt-3 block text-center text-[#1a1b41] hover:text-[#3bc14a] font-semibold transition">
+              View Details
+            </a>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
 
     // Fetch categories
     async function fetchCategories() {

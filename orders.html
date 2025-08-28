@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopLite | My Orders</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#fcfcfc] text-[#1a1b41]">
+
+  <!-- Navbar -->
+  <header class="bg-[#1a1b41] text-white sticky top-0 z-50">
+    <div class="container mx-auto flex items-center justify-between p-4">
+      <!-- Logo -->
+      <a href="index.html" class="text-3xl font-bold">
+        <span class="text-[#baff29]">Shop</span>Lite
+      </a>
+
+      <!-- Nav Links -->
+      <nav class="hidden md:flex gap-6">
+        <a href="index.html" class="hover:text-[#baff29]">Home</a>
+        <a href="orders.html" class="hover:text-[#baff29] font-semibold">Orders</a>
+        <a href="cart.html" class="hover:text-[#baff29]">Cart</a>
+        <a href="checkout.html" class="hover:text-[#baff29]">Checkout</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Orders Section -->
+  <section class="container mx-auto py-12 px-6">
+    <h1 class="text-3xl font-bold mb-6">My Orders</h1>
+    
+    <!-- Orders list -->
+    <div id="orders-list" class="space-y-6">
+      <!-- Orders injected by JS -->
+    </div>
+
+    <!-- Empty state -->
+    <div id="no-orders" class="text-center text-gray-600 hidden">
+      <p>You have no orders yet.</p>
+      <a href="index.html" class="mt-4 inline-block bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition">
+        Start Shopping
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#1a1b41] text-white py-6 text-center">
+    <p>&copy; 2025 ShopLite. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const ordersList = document.getElementById("orders-list");
+    const noOrders = document.getElementById("no-orders");
+
+    // Load all orders from localStorage
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+      if (orders.length === 0) {
+        noOrders.classList.remove("hidden");
+        return;
+      }
+
+      ordersList.innerHTML = orders.map(order => `
+        <div class="border rounded-lg p-6 shadow bg-white">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Order #${order.id}</h2>
+            <span class="px-3 py-1 rounded text-sm 
+              ${order.status === 'Processing' ? 'bg-yellow-100 text-yellow-700' : 
+                order.status === 'Shipped' ? 'bg-blue-100 text-blue-700' : 
+                'bg-green-100 text-green-700'}">
+              ${order.status}
+            </span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Date: ${order.date}</p>
+          <ul class="space-y-2">
+            ${order.items.map(item => `
+              <li class="flex items-center gap-4">
+                <img src="${item.image}" alt="${item.title}" class="h-16 w-16 object-contain border rounded">
+                <div>
+                  <p class="font-medium">${item.title}</p>
+                  <p class="text-sm text-gray-600">Qty: ${item.qty} × $${item.price}</p>
+                </div>
+              </li>
+            `).join("")}
+          </ul>
+          <div class="flex justify-between items-center mt-4">
+            <p class="font-bold">Total: $${order.total}</p>
+            <a href="receipt.html?orderId=${order.id}" 
+               class="text-[#3bc14a] font-semibold hover:underline">
+              View Receipt
+            </a>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", loadOrders);
+  </script>
+</body>
+</html>

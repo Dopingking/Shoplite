@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopLite | Order Receipt</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Roboto', sans-serif; background: #f9f9f9; }
+    h1,h2,h3 { font-family: 'Poppins', sans-serif; }
+    .receipt-card { max-width: 800px; margin: auto; background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .print-btn { background-color: #3bc14a; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: 0.3s; }
+    .print-btn:hover { background-color: #2aa63c; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { padding: 0.75rem; border-bottom: 1px solid #ddd; text-align: left; }
+  </style>
+</head>
+<body>
+  <div class="receipt-card mt-12">
+    <a href="index.html" class="mt-6 inline-block bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition">
+  Continue Shopping
+</a>
+
+    <h1 class="text-3xl font-bold mb-2">Order Confirmation</h1>
+    <p class="text-gray-600 mb-6">Thank you for your purchase! Your order has been placed successfully.</p>
+    
+    <div id="order-info" class="mb-6">
+      <!-- Order ID, Date, Status -->
+    </div>
+
+    <h2 class="text-2xl font-semibold mb-2">Items Purchased</h2>
+    <table id="order-items">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Items injected here -->
+      </tbody>
+    </table>
+
+    <div class="flex justify-between mt-4 text-lg font-semibold">
+      <p>Subtotal:</p>
+      <p id="subtotal">$0.00</p>
+    </div>
+    <div class="flex justify-between mt-1 text-lg font-semibold">
+      <p>Total:</p>
+      <p id="total">$0.00</p>
+    </div>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-2">Billing & Shipping</h2>
+    <div id="billing-shipping">
+      <!-- Billing and shipping info injected here -->
+    </div>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-2">Payment Info</h2>
+    <div id="payment-info">
+      <!-- Payment info injected here -->
+    </div>
+
+    <button class="print-btn mt-6" onclick="window.print()">Print Receipt</button>
+  </div>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function loadOrder() {
+      const orderId = getQueryParam("orderId");
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      const order = orders.find(o => o.orderId === orderId);
+
+      if(!order) {
+        document.body.innerHTML = '<p class="text-center mt-12 text-red-500">Order not found.</p>';
+        return;
+      }
+
+      // Order Info
+      const orderInfo = document.getElementById("order-info");
+      orderInfo.innerHTML = `
+        <p><strong>Order ID:</strong> ${order.orderId}</p>
+        <p><strong>Date:</strong> ${order.date}</p>
+        <p><strong>Status:</strong> <span class="text-green-600">${order.status}</span></p>
+      `;
+
+      // Items
+      const itemsTbody = document.getElementById("order-items").querySelector("tbody");
+      itemsTbody.innerHTML = '';
+      order.items.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${item.title}</td>
+          <td>${item.qty}</td>
+          <td>$${(item.price*item.qty).toFixed(2)}</td>
+        `;
+        itemsTbody.appendChild(tr);
+      });
+
+      document.getElementById("subtotal").textContent = `$${order.subtotal}`;
+      document.getElementById("total").textContent = `$${order.total}`;
+
+      // Billing & Shipping
+      const billingShippingDiv = document.getElementById("billing-shipping");
+      billingShippingDiv.innerHTML = `
+        <p><strong>Billing Name:</strong> ${order.billing.name}</p>
+        <p><strong>Billing Address:</strong> ${order.billing.address}, ${order.billing.city}, ${order.billing.zip}, ${order.billing.country}</p>
+        <p><strong>Shipping Name:</strong> ${order.shipping.name}</p>
+        <p><strong>Shipping Address:</strong> ${order.shipping.address}, ${order.shipping.city}, ${order.shipping.zip}, ${order.shipping.country}</p>
+      `;
+
+      // Payment Info
+      const paymentDiv = document.getElementById("payment-info");
+      paymentDiv.innerHTML = `
+        <p><strong>Cardholder:</strong> ${order.payment.cardName}</p>
+        <p><strong>Card Number:</strong> ${order.payment.cardNumber}</p>
+        <p><strong>Expiry:</strong> ${order.payment.expiry}</p>
+      `;
+    }
+
+    document.addEventListener("DOMContentLoaded", loadOrder);
+  </script>
+</body>
+</html>
