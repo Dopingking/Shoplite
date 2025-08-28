@@ -6,8 +6,8 @@
   <title>ShopLite | Home</title>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto&family=Montserrat:wght@500;700&display=swap" rel="stylesheet>
+  <!-- Fonts (fixed) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Roboto', sans-serif; }
     h1, h2, h3, .nav-link { font-family: 'Poppins', sans-serif; }
@@ -51,9 +51,8 @@
   <header class="bg-[#1a1b41] text-white sticky top-0 z-50">
     <div class="container mx-auto flex items-center justify-between p-4">
       <!-- Logo -->
-      <a href="index.html" 
-         class="text-3xl font-bold">
-         <span class="text-[#baff29]">Shop</span>Lite
+      <a href="index.html" class="text-3xl font-bold">
+        <span class="text-[#baff29]">Shop</span>Lite
       </a>
 
       <!-- Nav Links (Desktop) -->
@@ -90,44 +89,37 @@
   </header>
 
   <!-- Hero Section -->
-<section class="relative w-full h-[70vh] overflow-hidden">
-  <!-- Slides -->
-  <div id="hero-bg" class="absolute inset-0 flex transition-transform duration-700 ease-in-out">
-    <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=1201&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-         class="w-full h-full object-cover flex-shrink-0" alt="Electronics">
-    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-         class="w-full h-full object-cover flex-shrink-0" alt="Electronics">
-    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1600&q=80"
-         class="w-full h-full object-cover flex-shrink-0" alt="Shopping">
-  </div>
-
-  <!-- Overlay -->
-  <div class="absolute inset-0 bg-black/50"></div>
-
-  <!-- Text Content -->
-  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
-    <div class="bg-[#1a1b41]/70 p-6 md:p-10 rounded-lg shadow-lg">
-      <h1 class="text-4xl md:text-6xl font-bold mb-4">
-        Fresh <span class="text-[#baff29]">Deals</span>, Just for You
-      </h1>
-      <p class="text-lg mb-6 text-gray-200">
-        Discover the latest products at unbeatable prices. Fast shipping, secure checkout, and daily offers.
-      </p>
-      <a href="#products" 
-         class="bg-[#3bc14a] text-white px-8 py-3 rounded-lg shadow hover:bg-green-700 transition">
-        Shop Now
-      </a>
+  <section class="relative w-full h-[70vh] overflow-hidden">
+    <!-- Slides -->
+    <div id="hero-bg" class="absolute inset-0 flex transition-transform duration-700 ease-in-out">
+      <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=1201&auto=format&fit=crop&ixlib=rb-4.1.0" class="w-full h-full object-cover flex-shrink-0" alt="Electronics">
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0" class="w-full h-full object-cover flex-shrink-0" alt="Electronics">
+      <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1600&q=80" class="w-full h-full object-cover flex-shrink-0" alt="Shopping">
     </div>
-  </div>
 
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
 
+    <!-- Text Content -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
+      <div class="bg-[#1a1b41]/70 p-6 md:p-10 rounded-lg shadow-lg">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">
+          Fresh <span class="text-[#baff29]">Deals</span>, Just for You
+        </h1>
+        <p class="text-lg mb-6 text-gray-200">
+          Discover the latest products at unbeatable prices. Fast shipping, secure checkout, and daily offers.
+        </p>
+        <a href="#products" class="bg-[#3bc14a] text-white px-8 py-3 rounded-lg shadow hover:bg-green-700 transition">
+          Shop Now
+        </a>
+      </div>
+    </div>
 
-  <!-- Promo Marquee -->
-  <marquee class="absolute bottom-0 left-0 w-full bg-[#baff29] text-[#1a1b41] font-bold py-2">
-    🚀 Big Sale Today! · 🛒 Free Shipping on Orders Over $50 · 🔥 Up to 60% Off Selected Items · 🎉 ShopLite Exclusive Deals
-  </marquee>
-</section>
-
+    <!-- Promo Marquee -->
+    <marquee class="absolute bottom-0 left-0 w-full bg-[#baff29] text-[#1a1b41] font-bold py-2">
+      🚀 Big Sale Today! · 🛒 Free Shipping on Orders Over $50 · 🔥 Up to 60% Off Selected Items · 🎉 ShopLite Exclusive Deals
+    </marquee>
+  </section>
 
   <!-- Featured Products -->
   <section id="products" class="py-12 px-6 container mx-auto">
@@ -141,9 +133,7 @@
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#3bc14a]"></div>
       <p class="mt-2 text-gray-600">Loading products...</p>
     </div>
-    <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <!-- Products injected from API -->
-    </div>
+    <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
   </section>
 
   <!-- Categories -->
@@ -154,9 +144,7 @@
         <div class="inline-block animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-[#3bc14a]"></div>
         <p class="mt-2 text-gray-600">Loading categories...</p>
       </div>
-      <div id="categories" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-        <!-- Categories injected from API -->
-      </div>
+      <div id="categories" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </div>
   </section>
 
@@ -187,28 +175,20 @@
     const loadingCategories = document.getElementById("loading-categories");
     const toast = document.getElementById("toast");
 
-    // Hero Section
-const heroBg = document.getElementById("hero-bg");
-  const prev = document.getElementById("prev");
-  const next = document.getElementById("next");
-  let index = 0;
-  const slidesCount = heroBg.children.length;
+    // Hero Section auto slider
+    const heroBg = document.getElementById("hero-bg");
+    let index = 0;
+    const slidesCount = heroBg.children.length;
 
-  function showSlide(i) {
-    index = (i + slidesCount) % slidesCount; 
-    heroBg.style.transform = `translateX(-${index * 100}%)`;
-  }
+    function showSlide(i) {
+      index = (i + slidesCount) % slidesCount; 
+      heroBg.style.transform = `translateX(-${index * 100}%)`;
+    }
 
-  // Auto Slide
-  setInterval(() => {
-    showSlide(index + 1);
-  }, 4000);
-
-  // Manual
-  prev.addEventListener("click", () => showSlide(index - 1));
-  next.addEventListener("click", () => showSlide(index + 1));
-
-// Hero section end
+    // Auto Slide
+    setInterval(() => {
+      showSlide(index + 1);
+    }, 4000);
 
     // Utility: pick the first valid image URL
     function getValidImage(images) {
@@ -222,7 +202,7 @@ const heroBg = document.getElementById("hero-bg");
       return "https://placehold.co/300x200?text=No+Image";
     }
 
-    // Fetch products (all or by category ID)
+    // Fetch products
     async function fetchProducts(categoryId = null) {
       try {
         loadingProducts.classList.remove("hidden");
@@ -236,7 +216,6 @@ const heroBg = document.getElementById("hero-bg");
         const products = await res.json();
 
         if (!Array.isArray(products)) {
-          console.error("Unexpected products format:", products);
           loadingProducts.classList.add("hidden");
           productList.innerHTML = '<p class="text-center col-span-full text-red-500">Error loading products. Please try again.</p>';
           return;
@@ -245,44 +224,34 @@ const heroBg = document.getElementById("hero-bg");
         renderProducts(products);
         loadingProducts.classList.add("hidden");
       } catch (err) {
-        console.error("Error fetching products:", err);
         loadingProducts.classList.add("hidden");
         productList.innerHTML = '<p class="text-center col-span-full text-red-500">Error loading products. Please try again.</p>';
       }
     }
 
     // Render products
-    // Render products
-function renderProducts(products) {
-  productList.innerHTML = products
-    .map((p) => {
-      const imgSrc = getValidImage(p.images);
-
-      return `
-        <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
-          <img src="${imgSrc}" alt="${p.title}" 
-               class="h-48 w-full object-contain p-4">
-          <div class="p-4">
-            <h3 class="font-semibold text-gray-800 line-clamp-1">${p.title}</h3>
-            <p class="text-gray-600 text-sm mt-1 line-clamp-2">${p.description || 'No description available'}</p>
-            <p class="price text-[#1a1b41] font-bold mt-2">$${p.price}</p>
-            
-            <button onclick="addToCart(${p.id}, '${p.title.replace(/'/g, "\\'")}', ${p.price}, '${imgSrc}')"
-              class="mt-3 w-full bg-[#3bc14a] text-white py-2 rounded hover:bg-green-700 transition">
-              Add to Cart
-            </button>
-
-            <!-- View Details Link -->
-            <a href="product.html?id=${p.id}" 
-               class="mt-3 block text-center text-[#1a1b41] hover:text-[#3bc14a] font-semibold transition">
-              View Details
-            </a>
-          </div>
-        </div>
-      `;
-    })
-    .join("");
-}
+    function renderProducts(products) {
+      productList.innerHTML = products.map((p) => {
+        const imgSrc = getValidImage(p.images);
+        return `
+          <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="${imgSrc}" alt="${p.title}" class="h-48 w-full object-contain p-4">
+            <div class="p-4">
+              <h3 class="font-semibold text-gray-800 line-clamp-1">${p.title}</h3>
+              <p class="text-gray-600 text-sm mt-1 line-clamp-2">${p.description || 'No description available'}</p>
+              <p class="price text-[#1a1b41] font-bold mt-2">$${p.price}</p>
+              
+              <button onclick="addToCart(${p.id}, '${p.title.replace(/'/g, "\\'")}', ${p.price}, '${imgSrc}')"
+                class="mt-3 w-full bg-[#3bc14a] text-white py-2 rounded hover:bg-green-700 transition">
+                Add to Cart
+              </button>
+              <a href="product.html?id=${p.id}" class="mt-3 block text-center text-[#1a1b41] hover:text-[#3bc14a] font-semibold transition">
+                View Details
+              </a>
+            </div>
+          </div>`;
+      }).join("");
+    }
 
     // Fetch categories
     async function fetchCategories() {
@@ -294,7 +263,6 @@ function renderProducts(products) {
         const categories = await res.json();
 
         if (!Array.isArray(categories)) {
-          console.error("Unexpected categories format:", categories);
           loadingCategories.classList.add("hidden");
           categoriesDiv.innerHTML = '<p class="text-center col-span-full text-red-500">Error loading categories.</p>';
           return;
@@ -303,7 +271,6 @@ function renderProducts(products) {
         renderCategories(categories);
         loadingCategories.classList.add("hidden");
       } catch (err) {
-        console.error("Error fetching categories:", err);
         loadingCategories.classList.add("hidden");
         categoriesDiv.innerHTML = '<p class="text-center col-span-full text-red-500">Error loading categories.</p>';
       }
@@ -311,19 +278,12 @@ function renderProducts(products) {
 
     // Render categories
     function renderCategories(categories) {
-      // Limit to 4 categories for a clean layout
       const limitedCategories = categories.slice(0, 4);
-      
-      categoriesDiv.innerHTML = limitedCategories
-        .map(
-          (cat) => `
-          <button onclick="fetchProducts(${cat.id})"
-                 class="category-btn px-6 py-8 bg-[#1a1b41] text-white rounded-lg hover:bg-[#3bc14a] transition text-lg font-semibold">
-            ${cat.name}
-          </button>
-        `
-        )
-        .join("");
+      categoriesDiv.innerHTML = limitedCategories.map((cat) => `
+        <button onclick="fetchProducts(${cat.id})"
+          class="category-btn px-6 py-8 bg-[#1a1b41] text-white rounded-lg hover:bg-[#3bc14a] transition text-lg font-semibold">
+          ${cat.name}
+        </button>`).join("");
     }
 
     // Show toast notification
@@ -342,24 +302,15 @@ function renderProducts(products) {
       if (idx >= 0) {
         cart[idx].qty++;
       } else {
-        cart.push({ 
-          id: productId, 
-          qty: 1, 
-          title, 
-          price, 
-          image 
-        });
+        cart.push({ id: productId, qty: 1, title, price, image });
       }
 
       localStorage.setItem("cart", JSON.stringify(cart));
       updateCartCount();
       showToast();
-      
-      // Add animation to cart icon
+
       cartCount.classList.add("cart-pulse");
-      setTimeout(() => {
-        cartCount.classList.remove("cart-pulse");
-      }, 1500);
+      setTimeout(() => cartCount.classList.remove("cart-pulse"), 1500);
     }
 
     // Update cart icon count
@@ -367,13 +318,8 @@ function renderProducts(products) {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
       cartCount.textContent = totalItems;
-      
-      // Show/hide cart badge based on items
-      if (totalItems > 0) {
-        cartCount.classList.remove("hidden");
-      } else {
-        cartCount.classList.add("hidden");
-      }
+      if (totalItems > 0) cartCount.classList.remove("hidden");
+      else cartCount.classList.add("hidden");
     }
 
     // Mobile menu toggle
