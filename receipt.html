@@ -65,64 +65,67 @@
   </div>
 
   <script>
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  function loadOrder() {
+    const orderIdParam = getQueryParam("orderId");
+
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const order = orders.find(o => o.orderId === orderIdParam);
+
+    if (!order) {
+      document.body.innerHTML = '<p class="text-center mt-12 text-red-500">Order not found.</p>';
+      return;
     }
 
-    function loadOrder() {
-      const orderId = getQueryParam("orderId");
-      const orders = JSON.parse(localStorage.getItem("orders")) || [];
-      const order = orders.find(o => o.orderId === orderId);
+    // --- Order Info ---
+    const orderInfo = document.getElementById("order-info");
+    orderInfo.innerHTML = `
+      <p><strong>Order ID:</strong> ${order.orderId}</p>
+      <p><strong>Date:</strong> ${order.date || "N/A"}</p>
+      <p><strong>Status:</strong> <span class="text-green-600">${order.status || "Processing"}</span></p>
+    `;
 
-      if(!order) {
-        document.body.innerHTML = '<p class="text-center mt-12 text-red-500">Order not found.</p>';
-        return;
-      }
-
-      // Order Info
-      const orderInfo = document.getElementById("order-info");
-      orderInfo.innerHTML = `
-        <p><strong>Order ID:</strong> ${order.orderId}</p>
-        <p><strong>Date:</strong> ${order.date}</p>
-        <p><strong>Status:</strong> <span class="text-green-600">${order.status}</span></p>
+    // --- Items ---
+    const itemsTbody = document.getElementById("order-items").querySelector("tbody");
+    itemsTbody.innerHTML = '';
+    (order.items || []).forEach(item => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${item.title}</td>
+        <td>${item.qty}</td>
+        <td>$${(item.price * item.qty).toFixed(2)}</td>
       `;
+      itemsTbody.appendChild(tr);
+    });
 
-      // Items
-      const itemsTbody = document.getElementById("order-items").querySelector("tbody");
-      itemsTbody.innerHTML = '';
-      order.items.forEach(item => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${item.title}</td>
-          <td>${item.qty}</td>
-          <td>$${(item.price*item.qty).toFixed(2)}</td>
-        `;
-        itemsTbody.appendChild(tr);
-      });
+    document.getElementById("subtotal").textContent = `$${order.subtotal || 0}`;
+    document.getElementById("total").textContent = `$${order.total || 0}`;
 
-      document.getElementById("subtotal").textContent = `$${order.subtotal}`;
-      document.getElementById("total").textContent = `$${order.total}`;
+    // --- Billing & Shipping ---
+    const billingShippingDiv = document.getElementById("billing-shipping");
+    billingShippingDiv.innerHTML = `
+      <p><strong>Billing Name:</strong> ${order.billing?.name || "N/A"}</p>
+      <p><strong>Billing Address:</strong> ${order.billing?.address || ""}, ${order.billing?.city || ""}, ${order.billing?.zip || ""}, ${order.billing?.country || ""}</p>
+      <p><strong>Shipping Name:</strong> ${order.shipping?.name || "N/A"}</p>
+      <p><strong>Shipping Address:</strong> ${order.shipping?.address || ""}, ${order.shipping?.city || ""}, ${order.shipping?.zip || ""}, ${order.shipping?.country || ""}</p>
+    `;
 
-      // Billing & Shipping
-      const billingShippingDiv = document.getElementById("billing-shipping");
-      billingShippingDiv.innerHTML = `
-        <p><strong>Billing Name:</strong> ${order.billing.name}</p>
-        <p><strong>Billing Address:</strong> ${order.billing.address}, ${order.billing.city}, ${order.billing.zip}, ${order.billing.country}</p>
-        <p><strong>Shipping Name:</strong> ${order.shipping.name}</p>
-        <p><strong>Shipping Address:</strong> ${order.shipping.address}, ${order.shipping.city}, ${order.shipping.zip}, ${order.shipping.country}</p>
-      `;
+    // --- Payment Info ---
+    const paymentDiv = document.getElementById("payment-info");
+    paymentDiv.innerHTML = `
+      <p><strong>Cardholder:</strong> ${order.payment?.cardName || "N/A"}</p>
+      <p><strong>Card Number:</strong> ${order.payment?.cardNumber || "**** **** **** ****"}</p>
+      <p><strong>Expiry:</strong> ${order.payment?.expiry || "N/A"}</p>
+    `;
+  }
 
-      // Payment Info
-      const paymentDiv = document.getElementById("payment-info");
-      paymentDiv.innerHTML = `
-        <p><strong>Cardholder:</strong> ${order.payment.cardName}</p>
-        <p><strong>Card Number:</strong> ${order.payment.cardNumber}</p>
-        <p><strong>Expiry:</strong> ${order.payment.expiry}</p>
-      `;
-    }
+  document.addEventListener("DOMContentLoaded", loadOrder);
+</script>
 
-    document.addEventListener("DOMContentLoaded", loadOrder);
-  </script>
+
 </body>
 </html>
