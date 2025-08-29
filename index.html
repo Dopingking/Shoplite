@@ -55,6 +55,16 @@
         <span class="text-[#baff29]">Shop</span>Lite
       </a>
 
+         <!-- Search Bar (Desktop) -->
+    <div class="hidden md:flex flex-1 justify-center mx-6">
+      <input id="search-input" type="text" placeholder="Search products..."
+        class="w-full max-w-md px-4 py-2 rounded-l-md text-black focus:outline-none">
+      <button id="search-btn" 
+        class="bg-[#3bc14a] px-4 py-2 rounded-r-md hover:bg-green-700 transition">
+        🔍
+      </button>
+    </div>
+
       <!-- Nav Links (Desktop) -->
       <nav id="nav-links" class="hidden md:flex gap-6">
         <a href="index.html" class="nav-link hover:text-[#baff29]">Home</a>
@@ -77,6 +87,16 @@
 
     <!-- Mobile Nav -->
     <div id="mobile-menu" class="hidden bg-[#1a1b41] p-4 md:hidden">
+
+        <!-- Mobile Search -->
+    <div class="flex mb-4">
+      <input id="mobile-search-input" type="text" placeholder="Search products..."
+        class="w-full px-3 py-2 rounded-l-md text-black focus:outline-none">
+      <button id="mobile-search-btn" 
+        class="bg-[#3bc14a] px-3 py-2 rounded-r-md hover:bg-green-700 transition">
+        🔍
+      </button>
+    </div>
       <a href="index.html" class="block py-2 hover:text-[#baff29]">Home</a>
       <a href="orders.html" class="block py-2 hover:text-[#baff29]">Shop</a>
       <a href="/Pages/About.html" class="block py-2 hover:text-[#baff29]">About</a>
@@ -170,6 +190,50 @@
     const loadingProducts = document.getElementById("loading-products");
     const loadingCategories = document.getElementById("loading-categories");
     const toast = document.getElementById("toast");
+
+    // Search function
+async function searchProducts(query) {
+  if (!query.trim()) {
+    fetchProducts(); // load default products
+    return;
+  }
+  try {
+    loadingProducts.classList.remove("hidden");
+    productList.innerHTML = '';
+
+    const res = await fetch(`${API_URL}?title=${encodeURIComponent(query)}&offset=0&limit=12`);
+    const products = await res.json();
+
+    if (!Array.isArray(products) || products.length === 0) {
+      productList.innerHTML = `<p class="col-span-full text-center text-red-500">No products found for "${query}".</p>`;
+    } else {
+      renderProducts(products);
+    }
+
+    loadingProducts.classList.add("hidden");
+  } catch (err) {
+    loadingProducts.classList.add("hidden");
+    productList.innerHTML = '<p class="col-span-full text-center text-red-500">Error searching products.</p>';
+  }
+}
+
+// Hook up search events
+document.getElementById("search-btn").addEventListener("click", () => {
+  const query = document.getElementById("search-input").value;
+  searchProducts(query);
+});
+document.getElementById("mobile-search-btn").addEventListener("click", () => {
+  const query = document.getElementById("mobile-search-input").value;
+  searchProducts(query);
+});
+
+// Optional: Press Enter to search
+document.getElementById("search-input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") searchProducts(e.target.value);
+});
+document.getElementById("mobile-search-input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") searchProducts(e.target.value);
+});
 
     // Hero Section auto slider
     const heroBg = document.getElementById("hero-bg");
