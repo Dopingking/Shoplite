@@ -16,12 +16,13 @@
       <span id="cart-count" class="absolute -top-2 -right-3 bg-[#3bc14a] text-white text-xs rounded-full px-2">0</span>
     </a>
   </header>
-  <div class="p-4 ">
-  <a href="index.html" 
-     class="inline-block bg-gray-200 text-[#1a1b41] px-4 py-2 rounded-lg font-medium hover:bg-[#3bc14a] hover:text-white transition">
-    ← Back to Shop
-  </a>
-</div>
+
+  <div class="p-4">
+    <a href="index.html" 
+      class="inline-block bg-gray-200 text-[#1a1b41] px-4 py-2 rounded-lg font-medium hover:bg-[#3bc14a] hover:text-white transition">
+      ← Back to Shop
+    </a>
+  </div>
 
   <!-- Product Section -->
   <section id="product-details" class="container mx-auto px-6 py-12">
@@ -36,10 +37,6 @@
     <p>&copy; 2025 ShopLite. All rights reserved.</p>
   </footer>
 
-  <!-- <button id="scrollTopBtn" 
-        class="hidden fixed bottom-6 right-6 bg-[#3bc14a] text-white p-3 rounded-full shadow-lg hover:bg-green-700 transition">
-  ↑
-</button> -->
   <script>
     const API_URL = "https://api.escuelajs.co/api/v1/products";
     const productDetails = document.getElementById("product-details");
@@ -75,12 +72,13 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Image Gallery -->
             <div>
-              <img src="${getValidImage(product.images)}" 
+              <img id="main-image" src="${getValidImage(product.images)}" 
                    alt="${product.title}" 
                    class="w-full h-96 object-contain rounded-lg border">
               <div class="flex gap-2 mt-4">
                 ${product.images.map(img => `
-                  <img src="${img}" class="w-20 h-20 object-contain border rounded cursor-pointer hover:border-[#3bc14a]">
+                  <img src="${img}" 
+                       class="thumbnail w-20 h-20 object-contain border rounded cursor-pointer hover:border-[#3bc14a]">
                 `).join("")}
               </div>
             </div>
@@ -89,16 +87,72 @@
             <div>
               <h1 class="text-3xl font-bold mb-4">${product.title}</h1>
               <p class="text-gray-600 mb-4">${product.description}</p>
-              <p class="text-xl font-bold text-[#1a1b41] mb-6">$${product.price}</p>
+
+              <!-- Price & Quantity -->
+              <div class="flex items-center gap-6 mb-6">
+                <p class="text-xl font-bold text-[#1a1b41]">Price: $${product.price}</p>
+                <div class="flex items-center gap-2">
+                  <button id="decrease-qty" class="px-2 py-1 bg-gray-200 rounded">-</button>
+                  <input id="product-qty" type="number" value="1" min="1" class="w-16 text-center border rounded">
+                  <button id="increase-qty" class="px-2 py-1 bg-gray-200 rounded">+</button>
+                </div>
+              </div>
+
+              <!-- Total -->
+              <p id="total-price" class="text-lg font-semibold mb-6">
+                Total: $${product.price}
+              </p>
+
               <p class="text-sm text-gray-500 mb-6">Category: ${product.category?.name || "N/A"}</p>
 
-              <button onclick="addToCart(${product.id}, '${product.title.replace(/'/g, "\\'")}', ${product.price}, '${getValidImage(product.images)}')"
+              <button id="add-to-cart-btn"
                 class="bg-[#3bc14a] text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
                 Add to Cart
               </button>
             </div>
           </div>
         `;
+
+        // ====== Image Switch Logic ======
+        const mainImage = document.getElementById("main-image");
+        document.querySelectorAll(".thumbnail").forEach(thumb => {
+          thumb.addEventListener("click", () => {
+            mainImage.src = thumb.src;
+          });
+        });
+
+        // ====== Quantity + Total Update ======
+        const qtyInput = document.getElementById("product-qty");
+        const totalPriceEl = document.getElementById("total-price");
+        const increaseBtn = document.getElementById("increase-qty");
+        const decreaseBtn = document.getElementById("decrease-qty");
+        const addBtn = document.getElementById("add-to-cart-btn");
+
+        function updateTotal() {
+          let qty = parseInt(qtyInput.value) || 1;
+          if (qty < 1) qty = 1;
+          qtyInput.value = qty;
+          totalPriceEl.textContent = "Total: $" + (qty * product.price);
+        }
+
+        increaseBtn.addEventListener("click", () => {
+          qtyInput.value = parseInt(qtyInput.value) + 1;
+          updateTotal();
+        });
+
+        decreaseBtn.addEventListener("click", () => {
+          qtyInput.value = Math.max(1, parseInt(qtyInput.value) - 1);
+          updateTotal();
+        });
+
+        qtyInput.addEventListener("input", updateTotal);
+
+        // ====== Add to Cart ======
+        addBtn.addEventListener("click", () => {
+          let qty = parseInt(qtyInput.value) || 1;
+          addToCart(product.id, product.title, product.price, getValidImage(product.images), qty);
+        });
+
       } catch (err) {
         console.error("Error loading product:", err);
         productDetails.innerHTML = `<p class="text-red-500 text-center">Failed to load product details.</p>`;
@@ -106,14 +160,14 @@
     }
 
     // Add to cart
-    function addToCart(productId, title, price, image) {
+    function addToCart(productId, title, price, image, qty) {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       const idx = cart.findIndex((i) => i.id === productId);
 
       if (idx >= 0) {
-        cart[idx].qty++;
+        cart[idx].qty += qty;
       } else {
-        cart.push({ id: productId, qty: 1, title, price, image });
+        cart.push({ id: productId, qty, title, price, image });
       }
 
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -132,8 +186,6 @@
       fetchProduct();
       updateCartCount();
     });
-
-    
   </script>
 </body>
 </html>
