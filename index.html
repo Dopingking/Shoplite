@@ -13,19 +13,13 @@
   <!-- Navbar -->
   <header class="bg-[#1a1b41] text-white sticky top-0 z-50">
     <div class="container mx-auto flex items-center justify-between p-4">
-      <a href="#home" class="text-3xl font-bold">
-        <span class="text-[#baff29]">Shop</span>Lite
-      </a>
+      <a href="#home" class="text-3xl font-bold"><span class="text-[#baff29]">Shop</span>Lite</a>
 
-      <!-- Search Bar (Desktop) -->
       <div class="hidden md:flex flex-1 justify-center mx-6">
-        <input id="search-input" type="text" placeholder="Search products..."
-          class="w-full max-w-md px-4 py-2 rounded-l-md text-black focus:outline-none">
-        <button id="search-btn" 
-          class="bg-[#3bc14a] px-4 py-2 rounded-r-md hover:bg-green-700 transition">🔍</button>
+        <input id="search-input" type="text" placeholder="Search products..." class="w-full max-w-md px-4 py-2 rounded-l-md text-black focus:outline-none">
+        <button id="search-btn" class="bg-[#3bc14a] px-4 py-2 rounded-r-md hover:bg-green-700 transition">🔍</button>
       </div>
 
-      <!-- Nav Links (Desktop) -->
       <nav id="nav-links" class="hidden md:flex gap-6">
         <a href="index.html" class="nav-link hover:text-[#baff29]">Home</a>
         <a href="#products" class="nav-link hover:text-[#baff29]">Shop</a>
@@ -33,24 +27,15 @@
         <a href="#contact" class="nav-link hover:text-[#baff29]">Contact</a>
       </nav>
 
-      <!-- Cart -->
-      <a href="cart.html" class="relative ml-6">
-        🛒
-        <span id="cart-count" class="absolute -top-2 -right-3 bg-[#3bc14a] text-white text-xs rounded-full px-2">0</span>
-      </a>
+      <a href="cart.html" class="relative ml-6">🛒<span id="cart-count" class="absolute -top-2 -right-3 bg-[#3bc14a] text-white text-xs rounded-full px-2">0</span></a>
 
-      <!-- Mobile Menu Button -->
       <button id="menu-btn" class="md:hidden text-2xl">☰</button>
     </div>
 
-    <!-- Mobile Nav -->
     <div id="mobile-menu" class="hidden bg-[#1a1b41] p-4 md:hidden">
-      <!-- Mobile Search -->
       <div class="flex mb-4">
-        <input id="mobile-search-input" type="text" placeholder="Search products..."
-          class="w-full px-3 py-2 rounded-l-md text-black focus:outline-none">
-        <button id="mobile-search-btn" 
-          class="bg-[#3bc14a] px-3 py-2 rounded-r-md hover:bg-green-700 transition">🔍</button>
+        <input id="mobile-search-input" type="text" placeholder="Search products..." class="w-full px-3 py-2 rounded-l-md text-black focus:outline-none">
+        <button id="mobile-search-btn" class="bg-[#3bc14a] px-3 py-2 rounded-r-md hover:bg-green-700 transition">🔍</button>
       </div>
       <a href="index.html" class="block py-2 hover:text-[#baff29]">Home</a>
       <a href="#products" class="block py-2 hover:text-[#baff29]">Shop</a>
@@ -69,15 +54,9 @@
     <div class="absolute inset-0 bg-black/50"></div>
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
       <div class="bg-[#1a1b41]/70 p-6 md:p-10 rounded-lg shadow-lg">
-        <h1 class="text-4xl md:text-6xl font-bold mb-4">
-          Fresh <span class="text-[#baff29]">Deals</span>, Just for You
-        </h1>
-        <p class="text-lg mb-6 text-gray-200">
-          Discover the latest products at unbeatable prices. Fast shipping, secure checkout, and daily offers.
-        </p>
-        <a href="#products" class="bg-[#3bc14a] text-white px-8 py-3 rounded-lg shadow hover:bg-green-700 transition">
-          Shop Now
-        </a>
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">Fresh <span class="text-[#baff29]">Deals</span>, Just for You</h1>
+        <p class="text-lg mb-6 text-gray-200">Discover the latest products at unbeatable prices. Fast shipping, secure checkout, and daily offers.</p>
+        <a href="#products" class="bg-[#3bc14a] text-white px-8 py-3 rounded-lg shadow hover:bg-green-700 transition">Shop Now</a>
       </div>
     </div>
     <marquee class="absolute bottom-0 left-0 w-full bg-[#baff29] text-[#1a1b41] font-bold py-2">
@@ -87,9 +66,8 @@
 
   <!-- Featured Products -->
   <section id="products" class="py-12 px-6 container mx-auto">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold">Featured Products</h2>
-     
+    <div class="flex justify-between items-center mb-6 w-full">
+      <h2 class="text-2xl font-bold text-center md:text-left w-full">Featured Products</h2>
     </div>
     <div id="loading-products" class="text-center py-8">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#3bc14a]"></div>
@@ -101,7 +79,7 @@
   <!-- Categories -->
   <section class="bg-[#f9f9f9] py-12 px-6">
     <div class="container mx-auto">
-      <h2 class="text-2xl font-bold mb-6">Shop by Category</h2>
+      <h2 class="text-2xl font-bold mb-6 text-center md:text-left w-full">Shop by Category</h2>
       <div id="loading-categories" class="text-center py-4">
         <div class="inline-block animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-[#3bc14a]"></div>
         <p class="mt-2 text-gray-600">Loading categories...</p>
@@ -111,36 +89,25 @@
   </section>
 
   <!-- About Section -->
- 
   <section class="container mx-auto py-12 px-6 grid md:grid-cols-2 gap-10 items-center" id="about">
-    <div>
+    <div class="w-full text-center md:text-left">
       <h2 class="text-2xl font-bold mb-4 text-[#1a1b41]">Who We Are</h2>
-      <p class="mb-4 text-justify">
-        ShopLite was founded with one simple mission: to make shopping online affordable, exciting, and reliable. 
-        From trendy fashion and high-tech gadgets to home essentials, we bring you carefully curated products at the best value.
-      </p>
-      <p class="mb-4 text-justify">
-        We partner with trusted suppliers and brands worldwide to ensure quality while keeping prices low. 
-        Whether you’re shopping for yourself or gifting a loved one, we make the experience smooth and enjoyable.
-      </p>
+      <p class="mb-4 text-justify">ShopLite was founded with one simple mission: to make shopping online affordable, exciting, and reliable. From trendy fashion and high-tech gadgets to home essentials, we bring you carefully curated products at the best value.</p>
+      <p class="mb-4 text-justify">We partner with trusted suppliers and brands worldwide to ensure quality while keeping prices low. Whether you’re shopping for yourself or gifting a loved one, we make the experience smooth and enjoyable.</p>
     </div>
-    <img src="https://plus.unsplash.com/premium_photo-1661517335128-2bcf290d58f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="meeting room" class="rounded-lg shadow-lg">
+    <img src="https://plus.unsplash.com/premium_photo-1661517335128-2bcf290d58f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0" alt="meeting room" class="rounded-lg shadow-lg w-full">
   </section>
 
   <!-- Mission & Vision -->
   <section class="bg-gray-100 py-12 px-6">
     <div class="container mx-auto grid md:grid-cols-2 gap-10">
-      <div>
+      <div class="w-full text-center md:text-left">
         <h2 class="text-2xl font-bold mb-4 text-[#1a1b41]">Our Mission</h2>
-        <p>
-          To empower shoppers with unbeatable deals while delivering convenience and quality at every step.
-        </p>
+        <p>To empower shoppers with unbeatable deals while delivering convenience and quality at every step.</p>
       </div>
-      <div>
+      <div class="w-full text-center md:text-left">
         <h2 class="text-2xl font-bold mb-4 text-[#1a1b41]">Our Vision</h2>
-        <p>
-          To become the most loved online shopping destination where affordability meets style and trust.
-        </p>
+        <p>To become the most loved online shopping destination where affordability meets style and trust.</p>
       </div>
     </div>
   </section>
@@ -166,75 +133,52 @@
 
   <!-- Contact Section -->
   <section id="contact" class="py-16 px-6 bg-[#f9f9f9]">
-  <div class="container mx-auto max-w-3xl text-center">
-    <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
-    <p class="text-gray-600 mb-6">We’d love to hear from you! Reach out with any questions or feedback.</p>
-    
-    <form id="contact-form" class="grid gap-4">
-      <input id="name" type="text" placeholder="Your Name" class="p-3 border rounded-lg focus:outline-none">
-      <input id="email" type="email" placeholder="Your Email" class="p-3 border rounded-lg focus:outline-none">
-      <textarea id="message" placeholder="Your Message" class="p-3 border rounded-lg focus:outline-none"></textarea>
-      <button type="submit" class="bg-[#3bc14a] text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
-        Send Message
-      </button>
-    </form>
-  </div>
-</section>
+    <div class="container mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
+      <p class="text-gray-600 mb-6">We’d love to hear from you! Reach out with any questions or feedback.</p>
+      <form id="contact-form" class="grid gap-4">
+        <input id="name" type="text" placeholder="Your Name" class="p-3 border rounded-lg focus:outline-none">
+        <input id="email" type="email" placeholder="Your Email" class="p-3 border rounded-lg focus:outline-none">
+        <textarea id="message" placeholder="Your Message" class="p-3 border rounded-lg focus:outline-none"></textarea>
+        <button type="submit" class="bg-[#3bc14a] text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">Send Message</button>
+      </form>
+    </div>
+  </section>
 
-<!-- Popup -->
-<div id="popup" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50">
-  <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm">
-    <p id="popup-message" class="text-lg font-semibold mb-4"></p>
-    <button id="popup-close" class="bg-[#3bc14a] text-white px-4 py-2 rounded hover:bg-green-700">OK</button>
-  </div>
-</div>
-
-
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg transform translate-y-20 transition-transform duration-300">
-    Product added to cart!
-  </div>
-
-  <!-- Footer -->
-<footer class="bg-[#1a1b41] text-white py-8">
-  <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
-    <!-- Brand -->
-    <p class="mb-4 md:mb-0">&copy; 2025 <span class="font-bold">ShopLite</span>. All rights reserved.</p>
-
-    <!-- Social Icons -->
-    <div class="flex gap-6">
-      <a href="#home"  class="hover:text-[#baff29] transition">
-        <!-- Facebook -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-          <path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2c0-2 1.2-3 3-3h2v3h-1.5c-1 0-1.5.5-1.5 1.5V12h3l-.5 3h-2.5v7A10 10 0 0 0 22 12z"/>
-        </svg>
-      </a>
-      <a href="#" target="_blank" class="hover:text-[#baff29] transition">
-        <!-- Twitter / X -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-          <path d="M22 5.8c-.8.4-1.6.6-2.5.8a4.1 4.1 0 0 0 1.8-2.2 8.1 8.1 0 0 1-2.6 1 4.1 4.1 0 0 0-7 3.8A11.6 11.6 0 0 1 3 4.6a4.1 4.1 0 0 0 1.3 5.4c-.7 0-1.4-.2-2-.6v.1c0 2 1.5 3.8 3.4 4.2a4.1 4.1 0 0 1-1.9.1c.6 1.7 2.1 2.9 4 2.9A8.3 8.3 0 0 1 2 19.6a11.6 11.6 0 0 0 6.3 1.9c7.6 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2.1z"/>
-        </svg>
-      </a>
-      <a href="#" target="_blank" class="hover:text-[#baff29] transition">
-        <!-- Instagram -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-          <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm4.5-.9a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2z"/>
-        </svg>
-      </a>
-      <a href="mailto:info@shoplite.com" class="hover:text-[#baff29] transition">
-        <!-- Email -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 2v.5l-8 5-8-5V6h16zm0 12H4V8.2l8 5 8-5V18z"/>
-        </svg>
-      </a>
+  <!-- Popup -->
+  <div id="popup" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm">
+      <p id="popup-message" class="text-lg font-semibold mb-4"></p>
+      <button id="popup-close" class="bg-[#3bc14a] text-white px-4 py-2 rounded hover:bg-green-700">OK</button>
     </div>
   </div>
-</footer>
 
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg transform translate-y-20 transition-transform duration-300">Product added to cart!</div>
+
+  <!-- Footer -->
+  <footer class="bg-[#1a1b41] text-white py-8">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+      <p class="mb-4 md:mb-0">&copy; 2025 <span class="font-bold">ShopLite</span>. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="#home" class="hover:text-[#baff29] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2c0-2 1.2-3 3-3h2v3h-1.5c-1 0-1.5.5-1.5 1.5V12h3l-.5 3h-2.5v7A10 10 0 0 0 22 12z"/></svg>
+        </a>
+        <a href="#" class="hover:text-[#baff29] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22 5.8c-.8.4-1.6.6-2.5.8a4.1 4.1 0 0 0 1.8-2.2 8.1 8.1 0 0 1-2.6 1 4.1 4.1 0 0 0-7 3.8A11.6 11.6 0 0 1 3 4.6a4.1 4.1 0 0 0 1.3 5.4c-.7 0-1.4-.2-2-.6v.1c0 2 1.5 3.8 3.4 4.2a4.1 4.1 0 0 1-1.9.1c.6 1.7 2.1 2.9 4 2.9A8.3 8.3 0 0 1 2 19.6a11.6 11.6 0 0 0 6.3 1.9c7.6 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2.1z"/></svg>
+        </a>
+        <a href="#" class="hover:text-[#baff29] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm4.5-.9a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2z"/></svg>
+        </a>
+        <a href="mailto:info@shoplite.com" class="hover:text-[#baff29] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 2v.5l-8 5-8-5V6h16zm0 12H4V8.2l8 5 8-5V18z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
 
   <!-- Scroll To Top Button -->
   <button id="scrollTopBtn" class="fixed bottom-6 right-6 bg-[#3bc14a] text-white p-3 rounded-full shadow-lg hover:bg-green-700">⬆</button>
-
 
   <script src="/js/main.js"></script>
   <script src="js/contact.js"></script>
