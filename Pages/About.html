@@ -3,55 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us - ShopLane</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>About Us - ShopLite</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Navbar -->
-  <header class="bg-[#1a1b41] text-white shadow">
+  <header class="bg-[#1a1b41] text-white shadow sticky top-0 z-50">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
-       <a href="/index.html" class="text-3xl font-bold">
+      <a href="/index.html" class="text-3xl font-bold">
         <span class="text-[#baff29]">Shop</span>Lite
       </a>
 
-      <nav class="space-x-6">
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6">
         <a href="/index.html" class="hover:text-[#3bc14a]">Home</a>
-        <a href="/product.html" class="hover:text-[#3bc14a]">Product</a>
         <a href="/orders.html" class="hover:text-[#3bc14a]">Shop</a>
-        <a href="./About.html" class="text-[#3bc14a] font-semibold">About</a>
-        <a href="/checkout.html" class="hover:text-[#3bc14a]">Checkout</a>
+        <a href="./About.html" class="hover:text-[#3bc14a] font-semibold">About</a>
+        <a href="./contact.html" class="hover:text-[#3bc14a] font-semibold">Contact</a>
       </nav>
+
+      <!-- Hamburger Icon -->
+      <button id="menu-btn" class="md:hidden text-3xl">☰</button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#1a1b41] text-white px-6 py-4">
+      <a href="/index.html" class="block py-2 hover:text-[#3bc14a]">Home</a>
+      <a href="/orders.html" class="block py-2 hover:text-[#3bc14a]">Shop</a>
+      <a href="./About.html" class="block py-2 hover:text-[#3bc14a] font-semibold">About</a>
+      <a href="./contact.html" class="block py-2 hover:text-[#3bc14a] font-semibold">Contact</a>
     </div>
   </header>
 
   <!-- Hero Section -->
   <section class="relative w-full h-[70vh] overflow-hidden">
-   
     <div id="hero-bg" class="absolute inset-0 flex transition-transform duration-700 ease-in-out">
       <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=1201&auto=format&fit=crop&ixlib=rb-4.1.0" class="w-full h-full object-cover flex-shrink-0" alt="Electronics">
     </div>
-
-    <!-- Overlay -->
     <div class="absolute inset-0 bg-black/50"></div>
-
-    <!-- Text Content -->
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
       <div class="bg-[#1a1b41]/70 p-6 md:p-10 rounded-lg shadow-lg">
-        <h1 class="text-4xl md:text-6xl font-bold mb-4">
-          About ShopLite
-        </h1>
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">About ShopLite</h1>
         <p class="text-lg mb-6 text-gray-200">
-         Your trusted online store for fresh deals, unbeatable prices, and quality products.
+          Your trusted online store for fresh deals, unbeatable prices, and quality products.
         </p>
         <a href="/index.html" class="bg-[#3bc14a] text-white px-8 py-3 rounded-lg shadow hover:bg-green-700 transition">
           Shop Now
         </a>
       </div>
     </div>
-
-    <!-- Promo Marquee -->
     <marquee class="absolute bottom-0 left-0 w-full bg-[#baff29] text-[#1a1b41] font-bold py-2">
       🚀 Big Sale Today! · 🛒 Free Shipping on Orders Over $50 · 🔥 Up to 60% Off Selected Items · 🎉 ShopLite Exclusive Deals
     </marquee>
@@ -60,7 +61,7 @@
   <!-- About Content -->
   <section class="container mx-auto py-12 px-6 grid md:grid-cols-2 gap-10 items-center">
     <div>
-      <h2 class="text-2xl font-bold mb-4 text-[#1a1b41]">Who We Are</h2>
+      <h2 class="text-2xl font-bold mb-4 text-[#1a1b41] text-center md:text-left">Who We Are</h2>
       <p class="mb-4 text-justify">
         ShopLite was founded with one simple mission: to make shopping online affordable, exciting, and reliable. 
         From trendy fashion and high-tech gadgets to home essentials, we bring you carefully curated products at the best value.
@@ -70,20 +71,20 @@
         Whether you’re shopping for yourself or gifting a loved one, we make the experience smooth and enjoyable.
       </p>
     </div>
-    <img src="https://source.unsplash.com/600x400/?shopping,store" alt="About ShopLite" class="rounded-lg shadow-lg">
+    <img src="https://source.unsplash.com/600x400/?shopping,store" alt="About ShopLite" class="rounded-lg shadow-lg w-full">
   </section>
 
   <!-- Mission & Vision -->
   <section class="bg-gray-100 py-12 px-6">
     <div class="container mx-auto grid md:grid-cols-2 gap-10">
       <div>
-        <h2 class="text-2xl font-bold mb-4 text-[#1a1b41]">Our Mission</h2>
+        <h2 class="text-2xl font-bold mb-4 text-[#1a1b41] text-center md:text-left">Our Mission</h2>
         <p>
           To empower shoppers with unbeatable deals while delivering convenience and quality at every step.
         </p>
       </div>
       <div>
-        <h2 class="text-2xl font-bold mb-4 text-[#1a1b41]">Our Vision</h2>
+        <h2 class="text-2xl font-bold mb-4 text-[#1a1b41] text-center md:text-left">Our Vision</h2>
         <p>
           To become the most loved online shopping destination where affordability meets style and trust.
         </p>
@@ -114,6 +115,16 @@
   <footer class="bg-[#1a1b41] text-white py-6 mt-12 text-center">
     <p>&copy; 2025 ShopLite. All rights reserved.</p>
   </footer>
+
+  <!-- JS for Hamburger -->
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
 
 </body>
 </html>

@@ -3,44 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - ShopLane</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Contact Us - ShopLite</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+    .btn { font-family: 'Montserrat', sans-serif; }
+    .error { color: red; font-size: 0.9rem; margin-top: 2px; }
+    
+    /* Mobile menu animation */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    
+    #mobile-menu.open {
+      max-height: 300px;
+    }
+    
+    /* Hamburger icon animation */
+    #menu-btn.open span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    
+    #menu-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    #menu-btn.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Navbar -->
-  <header class="bg-[#1a1b41] text-white shadow">
+  <header class="bg-[#1a1b41] text-white shadow relative z-50">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
-      <a href="/index.html" class="text-2xl font-bold tracking-wide"> <span class="text-[#baff29]">Shop</span>Lite</a>
-      <nav class="space-x-6">
+      <a href="/index.html" class="text-2xl font-bold tracking-wide">
+        <span class="text-[#baff29]">Shop</span>Lite
+      </a>
+
+      <!-- Hamburger -->
+      <button id="menu-btn" class="md:hidden focus:outline-none z-50 cursor-pointer flex flex-col w-8 h-8 justify-center items-center">
+        <span class="bg-white block w-6 h-0.5 mb-1.5 transition-transform"></span>
+        <span class="bg-white block w-6 h-0.5 mb-1.5 transition-opacity"></span>
+        <span class="bg-white block w-6 h-0.5 transition-transform"></span>
+      </button>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex md:flex-row gap-6">
         <a href="/index.html" class="hover:text-[#3bc14a]">Home</a>
-        <a href="/product.html" class="hover:text-[#3bc14a]">Products</a>
         <a href="/orders.html" class="hover:text-[#3bc14a]">Shop</a>
         <a href="./About.html" class="hover:text-[#3bc14a]">About</a>
         <a href="./contact.html" class="text-[#3bc14a] font-semibold">Contact</a>
       </nav>
     </div>
-  </header>
-<!-- Hero Section -->
-  <section class="relative w-full h-[70vh] overflow-hidden">
-   
-    <div id="hero-bg" class="absolute inset-0 flex transition-transform duration-700 ease-in-out">
-      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0" class="w-full h-full object-cover flex-shrink-0" alt="Electronics">
-     
-    </div>
 
-    <!-- Overlay -->
+    <!-- Mobile Nav -->
+    <div id="mobile-menu" class="bg-[#1a1b41] md:hidden">
+      <div class="container mx-auto py-2">
+        <a href="/index.html" class="block py-2 px-4 hover:text-[#3bc14a]">Home</a>
+        <a href="/orders.html" class="block py-2 px-4 hover:text-[#3bc14a]">Shop</a>
+        <a href="./About.html" class="block py-2 px-4 hover:text-[#3bc14a]">About</a>
+        <a href="./contact.html" class="block py-2 px-4 text-[#3bc14a] font-semibold">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative w-full h-[70vh] overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0" 
+         class="absolute inset-0 w-full h-full object-cover" alt="Contact Hero">
     <div class="absolute inset-0 bg-black/50"></div>
 
-    <!-- Text Content -->
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
-      <div class="bg-[#1a1b41]/70 p-6 md:p-10 rounded-lg shadow-lg">
-        <h1 class="text-4xl md:text-6xl font-bold mb-4">
-         Get in Touch
-        </h1>
+      <div class="bg-[#1a1b41]/70 p-6 md:p-10 rounded-lg shadow-lg max-w-3xl">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">Get in Touch</h1>
         <p class="text-lg mb-6 text-gray-200">
-         We’d love to hear from you! Whether you have a question about your order, products, or anything else, our team is ready to help.
+          We'd love to hear from you! Whether you have a question about your order, products, or anything else, our team is ready to help.
         </p>
         <a href="/index.html" class="bg-[#3bc14a] text-white px-8 py-3 rounded-lg shadow hover:bg-green-700 transition">
           Shop Now
@@ -48,18 +90,16 @@
       </div>
     </div>
 
-    <!-- Promo Marquee -->
     <marquee class="absolute bottom-0 left-0 w-full bg-[#baff29] text-[#1a1b41] font-bold py-2">
       🚀 Big Sale Today! · 🛒 Free Shipping on Orders Over $50 · 🔥 Up to 60% Off Selected Items · 🎉 ShopLite Exclusive Deals
     </marquee>
   </section>
 
-
   <!-- Contact Info & Form -->
   <section class="container mx-auto py-12 px-6 grid md:grid-cols-2 gap-12 items-start">
     <!-- Contact Info -->
     <div>
-      <h2 class="text-2xl font-bold mb-4 text-[#1a1b41]">Contact Information</h2>
+      <h2 class="text-2xl font-bold mb-4 text-[#1a1b41] text-center">Contact Information</h2>
       <p class="mb-4">Reach us through the following channels:</p>
       <ul class="space-y-4">
         <li><strong>Email:</strong> support@shoplite.com</li>
@@ -69,17 +109,14 @@
       <div class="mt-8">
         <iframe 
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.3415329174643!2d3.379205!3d6.593932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8b2a3c0b8e2d%3A0x45a7f7c6f8b4a7!2sLagos%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1681234567890" 
-          width="100%" height="250" 
-          style="border:0;" 
-          allowfullscreen="" 
-          loading="lazy">
+          width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy">
         </iframe>
       </div>
     </div>
 
     <!-- Contact Form -->
     <div class="bg-white p-8 rounded-lg shadow-lg">
-      <h2 class="text-2xl font-bold mb-6 text-[#1a1b41]">Send Us a Message</h2>
+      <h2 class="text-2xl font-bold mb-6 text-[#1a1b41] text-center">Send Us a Message</h2>
       <form id="contact-form" class="space-y-4">
         <div>
           <label for="name" class="block text-sm font-medium">Name</label>
@@ -97,7 +134,7 @@
                     class="w-full border rounded px-4 py-2 focus:ring-2 focus:ring-[#3bc14a]"></textarea>
         </div>
         <button type="submit" 
-                class="bg-[#3bc14a] text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition">
+                class="bg-[#3bc14a] text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition w-full">
           Send Message
         </button>
       </form>
@@ -110,13 +147,38 @@
     <p>&copy; 2025 ShopLite. All rights reserved.</p>
   </footer>
 
+  <!-- Scripts -->
   <script>
-    document.getElementById("contact-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      document.getElementById("form-response").textContent = "✅ Thank you! Your message has been sent.";
-      this.reset();
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      // Toggle mobile menu
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        menuBtn.classList.toggle('open');
+      });
+
+      // Close menu on mobile link click
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          menuBtn.classList.remove('open');
+        });
+      });
+
+      // Contact form submission
+      document.getElementById("contact-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("form-response").textContent = "✅ Thank you! Your message has been sent.";
+        this.reset();
+        
+        // Clear message after 5 seconds
+        setTimeout(() => {
+          document.getElementById("form-response").textContent = "";
+        }, 5000);
+      });
     });
   </script>
 </body>
 </html>
-    

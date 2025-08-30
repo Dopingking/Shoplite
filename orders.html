@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ShopLite | My Orders</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for mobile menu */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    
+    #mobile-menu.open {
+      max-height: 300px; /* Adjust based on your content height */
+    }
+  </style>
 </head>
 <body class="bg-[#fcfcfc] text-[#1a1b41]">
 
@@ -16,13 +28,33 @@
         <span class="text-[#baff29]">Shop</span>Lite
       </a>
 
-      <!-- Nav Links -->
+      <!-- Desktop Nav -->
       <nav class="hidden md:flex gap-6">
         <a href="index.html" class="hover:text-[#baff29]">Home</a>
         <a href="orders.html" class="hover:text-[#baff29] font-semibold">Shop</a>
-        <a href="cart.html" class="hover:text-[#baff29]">Cart</a>
-        <a href="checkout.html" class="hover:text-[#baff29]">Checkout</a>
+        <a href="/Pages/About.html" class="hover:text-[#baff29] font-semibold">About</a>
+        <a href="/Pages/contact.html" class="hover:text-[#baff29] font-semibold">Contact</a>
       </nav>
+
+      <!-- Hamburger Button -->
+      <button id="menu-btn" class="md:hidden text-2xl z-50 cursor-pointer relative w-8 h-8">
+        <span class="sr-only">Menu</span>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6">
+          <span class="block absolute h-0.5 w-6 bg-current transform transition duration-300 ease-in-out -translate-y-2"></span>
+          <span class="block absolute h-0.5 w-6 bg-current transform transition duration-300 ease-in-out"></span>
+          <span class="block absolute h-0.5 w-6 bg-current transform transition duration-300 ease-in-out translate-y-2"></span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobile-menu" class="bg-[#1a1b41] md:hidden">
+      <div class="container mx-auto py-2">
+        <a href="index.html" class="block py-2 px-4 hover:text-[#baff29]">Home</a>
+        <a href="orders.html" class="block py-2 px-4 hover:text-[#baff29] font-semibold">Shop</a>
+        <a href="/Pages/About.html" class="block py-2 px-4 hover:text-[#baff29] font-semibold">About</a>
+        <a href="/Pages/contact.html" class="block py-2 px-4 hover:text-[#baff29] font-semibold">Contact</a>
+      </div>
     </div>
   </header>
 
@@ -50,10 +82,35 @@
   </footer>
 
   <script>
+    // Hamburger menu toggle with smooth slide
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("open");
+      menuBtn.classList.toggle("open");
+      
+      // Toggle aria-expanded for accessibility
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', !isExpanded);
+    });
+
+    // Initialize menu button
+    menuBtn.setAttribute('aria-expanded', 'false');
+
+    // Close menu when clicking on links
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove("open");
+        menuBtn.classList.remove("open");
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Load orders
     const ordersList = document.getElementById("orders-list");
     const noOrders = document.getElementById("no-orders");
 
-    // Load all orders from localStorage
     function loadOrders() {
       const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
@@ -62,39 +119,38 @@
         return;
       }
 
-     ordersList.innerHTML = orders.map(order => `
-  <div class="border rounded-lg p-6 shadow bg-white">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold">Order #${order.orderId}</h2>
-      <span class="px-3 py-1 rounded text-sm 
-        ${order.status === 'Processing' ? 'bg-yellow-100 text-yellow-700' : 
-          order.status === 'Shipped' ? 'bg-blue-100 text-blue-700' : 
-          'bg-green-100 text-green-700'}">
-        ${order.status}
-      </span>
-    </div>
-    <p class="text-gray-600 text-sm mb-4">Date: ${order.date}</p>
-    <ul class="space-y-2">
-      ${order.items.map(item => `
-        <li class="flex items-center gap-4">
-          <img src="${item.image}" alt="${item.title}" class="h-16 w-16 object-contain border rounded">
-          <div>
-            <p class="font-medium">${item.title}</p>
-            <p class="text-sm text-gray-600">Qty: ${item.qty} × $${item.price}</p>
+      ordersList.innerHTML = orders.map(order => `
+        <div class="border rounded-lg p-6 shadow bg-white">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+            <h2 class="text-xl font-semibold mb-2 md:mb-0">Order #${order.orderId}</h2>
+            <span class="px-3 py-1 rounded text-sm 
+              ${order.status === 'Processing' ? 'bg-yellow-100 text-yellow-700' : 
+                order.status === 'Shipped' ? 'bg-blue-100 text-blue-700' : 
+                'bg-green-100 text-green-700'}">
+              ${order.status}
+            </span>
           </div>
-        </li>
-      `).join("")}
-    </ul>
-    <div class="flex justify-between items-center mt-4">
-      <p class="font-bold">Total: $${order.total}</p>
-      <a href="receipt.html?orderId=${order.orderId}" 
-         class="text-[#3bc14a] font-semibold hover:underline">
-        View Receipt
-      </a>
-    </div>
-  </div>
-`).join("");
-
+          <p class="text-gray-600 text-sm mb-4">Date: ${order.date}</p>
+          <ul class="space-y-4">
+            ${order.items.map(item => `
+              <li class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <img src="${item.image}" alt="${item.title}" class="h-16 w-16 object-contain border rounded flex-shrink-0">
+                <div class="flex-1">
+                  <p class="font-medium">${item.title}</p>
+                  <p class="text-sm text-gray-600">Qty: ${item.qty} × $${item.price}</p>
+                </div>
+              </li>
+            `).join("")}
+          </ul>
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 gap-2">
+            <p class="font-bold">Total: $${order.total}</p>
+            <a href="receipt.html?orderId=${order.orderId}" 
+               class="text-[#3bc14a] font-semibold hover:underline">
+              View Receipt
+            </a>
+          </div>
+        </div>
+      `).join("");
     }
 
     document.addEventListener("DOMContentLoaded", loadOrders);
