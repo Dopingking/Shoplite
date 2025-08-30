@@ -11,30 +11,43 @@
     .btn, .price { font-family: 'Montserrat', sans-serif; }
   </style>
 </head>
-<body class="bg-[#fcfcfc] text-[#1a1b41]">
+<body class="bg-[#f9fafb] text-[#1a1b41]">
 
   <!-- Navbar -->
   <header class="bg-[#1a1b41] text-white p-4 flex justify-between items-center">
     <a href="index.html" class="text-2xl font-bold"><span class="text-[#baff29]">Shop</span>Lite</a>
-    <a href="index.html" class="text-white hover:text-[#baff29]">Continue Shopping</a>
+    <a href="index.html" 
+       class="bg-[#baff29] text-[#1a1b41] px-4 py-2 rounded-lg font-semibold hover:bg-[#a2e020] transition">
+       ← Continue Shopping
+    </a>
   </header>
 
   <!-- Cart Section -->
   <main class="container mx-auto py-12 px-6">
     <h1 class="text-3xl font-bold mb-6">Your Cart</h1>
 
-    <div id="cart-container" class="space-y-4">
+    <div id="cart-container" class="space-y-6">
       <!-- Cart items injected here -->
     </div>
 
-    <div id="cart-summary" class="mt-8 p-4 bg-white rounded-lg shadow-md hidden">
+    <!-- Order Summary -->
+    <div id="cart-summary" class="mt-10 p-6 bg-white rounded-xl shadow-lg hidden max-w-md ml-auto">
       <h2 class="text-2xl font-bold mb-4">Order Summary</h2>
-      <p class="mb-2">Subtotal: $<span id="subtotal">0.00</span></p>
-      <p class="mb-4 font-bold">Total: $<span id="total">0.00</span></p>
-      <a href="checkout.html" class="btn bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition">Proceed to Checkout</a>
+      <div class="flex justify-between mb-2 text-gray-700">
+        <span>Subtotal:</span>
+        <span>$<span id="subtotal">0.00</span></span>
+      </div>
+      <div class="flex justify-between font-bold text-lg border-t pt-2">
+        <span>Total:</span>
+        <span>$<span id="total">0.00</span></span>
+      </div>
+      <a href="checkout.html" 
+         class="block text-center mt-6 bg-[#3bc14a] text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+         Proceed to Checkout →
+      </a>
     </div>
 
-    <p id="empty-cart" class="text-center text-gray-500 mt-12">Your cart is empty.</p>
+    <p id="empty-cart" class="text-center text-gray-500 mt-12">🛒 Your cart is empty. Go add some items!</p>
   </main>
 
   <script>
@@ -59,21 +72,23 @@
 
       cart.forEach(item => {
         const div = document.createElement("div");
-        div.className = "flex items-center bg-white rounded-lg shadow-md p-4 gap-4";
+        div.className = "flex flex-col md:flex-row items-start md:items-center bg-white rounded-xl shadow-md p-4 gap-6";
 
         div.innerHTML = `
-          <img src="${item.image}" alt="${item.title}" class="w-24 h-24 object-contain rounded">
+          <img src="${item.image}" alt="${item.title}" class="w-28 h-28 object-contain rounded-lg border self-center md:self-auto">
           <div class="flex-1">
-            <h3 class="font-semibold">${item.title}</h3>
+            <h3 class="font-semibold text-lg">${item.title}</h3>
             <p class="text-gray-600">$${item.price}</p>
-            <div class="mt-2 flex items-center gap-2">
-              <button class="px-2 py-1 bg-gray-200 rounded qty-btn" data-id="${item.id}" data-action="minus">-</button>
+            <div class="mt-3 flex items-center gap-3 flex-wrap">
+              <button class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md qty-btn" data-id="${item.id}" data-action="minus">-</button>
               <span id="qty-${item.id}" class="font-semibold">${item.qty}</span>
-              <button class="px-2 py-1 bg-gray-200 rounded qty-btn" data-id="${item.id}" data-action="plus">+</button>
-              <button class="ml-4 text-red-500 font-bold remove-btn" data-id="${item.id}">Remove</button>
+              <button class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md qty-btn" data-id="${item.id}" data-action="plus">+</button>
+              <button class="ml-0 md:ml-6 text-red-600 font-medium hover:text-red-800 remove-btn" data-id="${item.id}">Remove</button>
             </div>
           </div>
-          <p class="font-bold">$<span id="item-total-${item.id}">${(item.price * item.qty).toFixed(2)}</span></p>
+          <p class="font-bold text-lg md:self-auto self-end mt-3 md:mt-0">
+            $<span id="item-total-${item.id}">${(item.price * item.qty).toFixed(2)}</span>
+          </p>
         `;
 
         cartContainer.appendChild(div);
