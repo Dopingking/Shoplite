@@ -222,13 +222,13 @@ document.addEventListener("DOMContentLoaded", function () {
   updateCartCount();
 });
 
-// Scroll-to-top logic
-const scrollTopBtn = document.getElementById("scrollTopBtn");
-window.onscroll = () => {
-  if (document.documentElement.scrollTop > 200) {
-    scrollTopBtn.style.display = "block";
-  } else {
-    scrollTopBtn.style.display = "none";
-  }
-};
-scrollTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+// // Scroll-to-top logic
+// const scrollTopBtn = document.getElementById("scrollTopBtn");
+// window.onscroll = () => {
+//   if (document.documentElement.scrollTop > 200) {
+//     scrollTopBtn.style.display = "block";
+//   } else {
+//     scrollTopBtn.style.display = "none";
+//   }
+// };
+// scrollTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });

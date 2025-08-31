@@ -5,36 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us - ShopLite</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Roboto', sans-serif; }
-    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
-    .btn { font-family: 'Montserrat', sans-serif; }
-    .error { color: red; font-size: 0.9rem; margin-top: 2px; }
-    
-    /* Mobile menu animation */
-    #mobile-menu {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-    }
-    
-    #mobile-menu.open {
-      max-height: 300px;
-    }
-    
-    /* Hamburger icon animation */
-    #menu-btn.open span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
-    
-    #menu-btn.open span:nth-child(2) {
-      opacity: 0;
-    }
-    
-    #menu-btn.open span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-  </style>
+<link rel="stylesheet" href="/assets/app.css">
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -138,47 +109,31 @@
           Send Message
         </button>
       </form>
-      <p id="form-response" class="mt-4 text-sm"></p>
     </div>
   </section>
 
+  <!-- Popup Notification -->
+  <div id="popup" class="hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center relative">
+      <p id="popup-message" class="text-gray-800 text-sm mb-4"></p>
+      <button id="popup-close" class="bg-[#3bc14a] text-white px-4 py-2 rounded hover:bg-green-700 transition">
+        Close
+      </button>
+    </div>
+  </div>
+
   <!-- Footer -->
-  <footer class="bg-[#1a1b41] text-white py-6 mt-12 text-center">
-    <p>&copy; 2025 ShopLite. All rights reserved.</p>
+  <footer class="bg-[#1a1b41] text-white py-8">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+      <p class="mb-4 md:mb-0">&copy; 2025 <span class="font-bold">ShopLite</span>. All rights reserved.</p>
+      <div class="flex gap-6">
+        <!-- Social icons omitted for brevity -->
+      </div>
+    </div>
   </footer>
 
-  <!-- Scripts -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const menuBtn = document.getElementById('menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
+ 
+  <script src="/js/contact.js"></script>
 
-      // Toggle mobile menu
-      menuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('open');
-        menuBtn.classList.toggle('open');
-      });
-
-      // Close menu on mobile link click
-      mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('open');
-          menuBtn.classList.remove('open');
-        });
-      });
-
-      // Contact form submission
-      document.getElementById("contact-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        document.getElementById("form-response").textContent = "✅ Thank you! Your message has been sent.";
-        this.reset();
-        
-        // Clear message after 5 seconds
-        setTimeout(() => {
-          document.getElementById("form-response").textContent = "";
-        }, 5000);
-      });
-    });
-  </script>
 </body>
 </html>
