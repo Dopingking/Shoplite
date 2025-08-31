@@ -11,38 +11,49 @@
 <body class="bg-[#fcfcfc] text-[#1a1b41]">
 
   <!-- Navbar -->
-  <header class="bg-[#1a1b41] text-white sticky top-0 z-50">
-    <div class="container mx-auto flex items-center justify-between p-4">
-      <a href="#home" class="text-3xl font-bold"><span class="text-[#baff29]">Shop</span>Lite</a>
+ <header class="bg-[#1a1b41] text-white sticky top-0 z-50">
+  <div class="container mx-auto flex items-center justify-between p-4">
+    <!-- Logo -->
+    <a href="#home" class="text-3xl font-bold">
+      <span class="text-[#baff29]">Shop</span>Lite
+    </a>
 
-      <div class="hidden md:flex flex-1 justify-center mx-6">
-        <input id="search-input" type="text" placeholder="Search products..." class="w-full max-w-md px-4 py-2 rounded-l-md text-black focus:outline-none">
-        <button id="search-btn" class="bg-[#3bc14a] px-4 py-2 rounded-r-md hover:bg-green-700 transition">🔍</button>
-      </div>
+    <!-- Search (desktop only) -->
+    <div class="hidden md:flex flex-1 justify-center mx-6">
+      <input id="search-input" type="text" placeholder="Search products..." class="w-full max-w-md px-4 py-2 rounded-l-md text-black focus:outline-none">
+      <button id="search-btn" class="bg-[#3bc14a] px-4 py-2 rounded-r-md hover:bg-green-700 transition">🔍</button>
+    </div>
 
-      <nav id="nav-links" class="hidden md:flex gap-6">
-        <a href="index.html" class="nav-link hover:text-[#baff29]">Home</a>
-        <a href="orders.html" class="nav-link hover:text-[#baff29]">Shop</a>
-        <a href="./Pages/About.html" class="nav-link hover:text-[#baff29]">About</a>
-        <a href="./Pages/contact.html" class="nav-link hover:text-[#baff29]">Contact</a>
-      </nav>
+    <!-- Nav links (desktop only) -->
+    <nav id="nav-links" class="hidden md:flex gap-6 mr-4">
+      <a href="index.html" class="nav-link hover:text-[#baff29]">Home</a>
+      <a href="orders.html" class="nav-link hover:text-[#baff29]">Shop</a>
+      <a href="./Pages/About.html" class="nav-link hover:text-[#baff29]">About</a>
+      <a href="./Pages/contact.html" class="nav-link hover:text-[#baff29]">Contact</a>
+    </nav>
 
-      <a href="cart.html" class="relative ml-6">🛒<span id="cart-count" class="absolute -top-2 -right-3 bg-[#3bc14a] text-white text-xs rounded-full px-2">0</span></a>
-
+    <!-- Cart + Hamburger -->
+    <div class="flex items-center gap-4">
+      <a href="cart.html" class="relative">🛒
+        <span id="cart-count" class="absolute -top-2 -right-3 bg-[#3bc14a] text-white text-xs rounded-full px-2">0</span>
+      </a>
       <button id="menu-btn" class="md:hidden text-2xl">☰</button>
     </div>
+  </div>
 
-    <div id="mobile-menu" class="hidden bg-[#1a1b41] p-4 md:hidden">
-      <div class="flex mb-4">
-        <input id="mobile-search-input" type="text" placeholder="Search products..." class="w-full px-3 py-2 rounded-l-md text-black focus:outline-none">
-        <button id="mobile-search-btn" class="bg-[#3bc14a] px-3 py-2 rounded-r-md hover:bg-green-700 transition">🔍</button>
-      </div>
-      <a href="index.html" class="block py-2 hover:text-[#baff29]">Home</a>
-      <a href="orders.html" class="block py-2 hover:text-[#baff29]">Shop</a>
-      <a href="/Pages/About.html" class="block py-2 hover:text-[#baff29]">About</a>
-      <a href="/Pages/contact.html" class="block py-2 hover:text-[#baff29]">Contact</a>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden bg-[#1a1b41] p-4 md:hidden">
+    <div class="flex mb-4">
+      <input id="mobile-search-input" type="text" placeholder="Search products..." class="w-full px-3 py-2 rounded-l-md text-black focus:outline-none">
+      <button id="mobile-search-btn" class="bg-[#3bc14a] px-3 py-2 rounded-r-md hover:bg-green-700 transition">🔍</button>
     </div>
-  </header>
+    <a href="index.html" class="block py-2 hover:text-[#baff29]">Home</a>
+    <a href="orders.html" class="block py-2 hover:text-[#baff29]">Shop</a>
+    <a href="/Pages/About.html" class="block py-2 hover:text-[#baff29]">About</a>
+    <a href="/Pages/contact.html" class="block py-2 hover:text-[#baff29]">Contact</a>
+  </div>
+</header>
+
 
   <!-- Hero Section -->
   <section class="relative w-full h-[70vh] overflow-hidden">
