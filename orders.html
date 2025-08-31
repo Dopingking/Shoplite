@@ -6,13 +6,24 @@
   <title>ShopLite | My Orders</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Full-height flex layout to push footer down */
+    html, body {
+      height: 100%;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1; /* Grow and fill available space */
+    }
+
     /* Custom styles for mobile menu */
     #mobile-menu {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease-out;
     }
-    
     #mobile-menu.open {
       max-height: 300px; /* Adjust based on your content height */
     }
@@ -21,7 +32,7 @@
 <body class="bg-[#fcfcfc] text-[#1a1b41]">
 
   <!-- Navbar -->
-  <header class="bg-[#1a1b41] text-white sticky top-0 z-50">
+ <header class="bg-[#1a1b41] text-white fixed top-0 left-0 w-full z-50">
     <div class="container mx-auto flex items-center justify-between p-4">
       <!-- Logo -->
       <a href="index.html" class="text-3xl font-bold">
@@ -58,23 +69,26 @@
     </div>
   </header>
 
-  <!-- Orders Section -->
-  <section class="container mx-auto py-12 px-6">
-    <h1 class="text-3xl font-bold mb-6">My Orders</h1>
-    
-    <!-- Orders list -->
-    <div id="orders-list" class="space-y-6">
-      <!-- Orders injected by JS -->
-    </div>
+  <!-- Main Content -->
+  <main>
+    <!-- Orders Section -->
+    <section class="container mx-auto py-12 px-6">
+      <h1 class="text-3xl font-bold mb-6">My Orders</h1>
+      
+      <!-- Orders list -->
+      <div id="orders-list" class="space-y-6">
+        <!-- Orders injected by JS -->
+      </div>
 
-    <!-- Empty state -->
-    <div id="no-orders" class="text-center text-gray-600 hidden">
-      <p>You have no orders yet.</p>
-      <a href="index.html" class="mt-4 inline-block bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition">
-        Start Shopping
-      </a>
-    </div>
-  </section>
+      <!-- Empty state -->
+      <div id="no-orders" class="text-center text-gray-600 hidden">
+        <p>You have no orders yet.</p>
+        <a href="index.html" class="mt-4 inline-block bg-[#3bc14a] text-white px-6 py-3 rounded hover:bg-green-700 transition">
+          Start Shopping
+        </a>
+      </div>
+    </section>
+  </main>
 
   <!-- Footer -->
   <footer class="bg-[#1a1b41] text-white py-8">
